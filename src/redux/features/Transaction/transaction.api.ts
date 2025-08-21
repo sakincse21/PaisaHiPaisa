@@ -1,0 +1,38 @@
+// Need to use the React-specific entry point to import createApi
+import { baseApi } from '@/redux/baseApi';
+
+export const transactionApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    addMoney: builder.mutation({
+      query: (transaction) => ({
+        url: "/transaction/add-money",
+        method: "POST",
+        body: transaction
+      })
+  }),
+    sendMoney: builder.mutation({
+      query: (transaction) => ({
+        url: "/transaction/send-money",
+        method: "POST",
+        body: transaction
+      })
+  }),
+    withdrawMoney: builder.mutation({
+      query: (transaction) => ({
+        url: "/transaction/withdraw",
+        method: "POST",
+        body: transaction
+      })
+  }),
+    cashIn: builder.mutation({
+      query: (transaction) => ({
+        url: "/transaction/cash-in",
+        method: "POST",
+        body: transaction
+      })
+  }),
+})})
+
+// Export hooks for usage in functional components, which are
+// auto-generated based on the defined endpoints
+export const { useAddMoneyMutation, useSendMoneyMutation, useWithdrawMoneyMutation, useCashInMutation } = transactionApi;
