@@ -31,7 +31,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         // body: userInfo,
       }),
-      invalidatesTags: ["USER"]
+      invalidatesTags: ["USER", "TRANSACTIONS"]
     }),
   }),
 });
