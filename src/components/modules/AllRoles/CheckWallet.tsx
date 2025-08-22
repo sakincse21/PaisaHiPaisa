@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useUserInfoQuery } from "@/redux/features/Auth/auth.api";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 const CheckWallet = () => {
   const { data, isLoading } = useUserInfoQuery(undefined);
