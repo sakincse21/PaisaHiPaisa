@@ -13,7 +13,7 @@ import type { TRole } from '@/types/user';
 import { createBrowserRouter } from 'react-router';
 import { userSiderbarItems } from './userSidebarItems';
 import { agentSiderbarItems } from './agentSidebarItems';
-import AllTransactions from '@/components/modules/AllRoles/AllTransactions';
+import Overview from '@/components/modules/AllRoles/Overview';
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
     children:[
       {
         index: true,
-        Component: AllTransactions
+        Component: Overview
       },
       ...generateRoutes(userSiderbarItems),
     ],
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
     children:[
       {
         index: true,
-        Component: AllTransactions
+        Component: Overview
       },
       ...generateRoutes(agentSiderbarItems),
     ],

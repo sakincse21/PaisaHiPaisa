@@ -4,6 +4,7 @@ import SendMoney from "@/components/modules/AllRoles/SendMoney";
 import WithdrawMoney from "@/pages/User/WithdrawMoney";
 import type { ISidebarItem } from "@/types";
 import CheckWallet from "@/components/modules/AllRoles/CheckWallet";
+import Overview from "@/components/modules/AllRoles/Overview";
 // import { lazy } from "react";
 
 // const Analytics = lazy(() => import("@/pages/Admin/Analytics"))
@@ -41,6 +42,11 @@ export const userSiderbarItems: ISidebarItem[] = [
         title: "All Transactions",
         url: "/user/all-transactions",
         component: AllTransactions,
+      },
+      {
+        title: "Overview",
+        url: "/user/overview",
+        component: Overview,
       },
     ],
   },
