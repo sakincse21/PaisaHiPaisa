@@ -1,5 +1,6 @@
 import AllTransactions from "@/components/modules/AllRoles/AllTransactions";
 import CheckWallet from "@/components/modules/AllRoles/CheckWallet";
+import Overview from "@/components/modules/AllRoles/Overview";
 import SendMoney from "@/components/modules/AllRoles/SendMoney";
 import AddMoneyRequest from "@/pages/Agent/AddMoneyRequest";
 import CashIn from "@/pages/Agent/CashIn";
@@ -41,6 +42,11 @@ export const agentSiderbarItems: ISidebarItem[] = [
         title: "All Transactions",
         url: "/agent/all-transactions",
         component: AllTransactions,
+      },
+      {
+        title: "Overview",
+        url: "/agent/overview",
+        component: Overview,
       },
     ],
   },

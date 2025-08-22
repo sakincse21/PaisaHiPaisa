@@ -26,7 +26,7 @@ export default function AllTransactions() {
     return <LoadingScreen />
   }
   console.log('all transactions',data);
-  const items:IItem[]=data?.data;
+  const items:IItem[]=data?.data?.data;
   return (
     <div className="w-full h-full md:w-5xl mx-auto flex flex-col">
       <div className="flex-1 overflow-hidden">
