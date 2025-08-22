@@ -16,6 +16,8 @@ import { useNavigate } from "react-router";
 import { useRegisterMutation } from "@/redux/features/Auth/auth.api";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { IRole } from "@/constants";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const registerSchema = z.object({
   name: z
@@ -57,6 +59,9 @@ const registerSchema = z.object({
       .string({ error: "NID must be string" })
       .length(17, { message: "NID length must be 13 or 17 characters long." }),
   ]),
+  role: z.enum([IRole.USER, IRole.AGENT], {
+    error: "Role must be a string",
+  }),
 });
 
 export function RegisterForm() {
@@ -71,6 +76,7 @@ export function RegisterForm() {
       phoneNo: "",
       address: "",
       nidNo: "",
+      role: IRole.USER,
     },
   });
   async function onSubmit(formData: z.infer<typeof registerSchema>) {
@@ -80,11 +86,11 @@ export function RegisterForm() {
     //   password: formData.password
     // }
     // console.log("showing res",res);
-    
+
     const toastId = toast.loading("Restration going on...");
-    
+
     try {
-        const res = await register(formData).unwrap();
+      const res = await register(formData).unwrap();
       if (res?.success) {
         toast.success(
           "Registration successful. Wait till you are verified to login.",
@@ -94,11 +100,12 @@ export function RegisterForm() {
       } else {
         toast.error(res?.data?.message, { id: toastId });
       }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error(error);
-      const errorMessage = error?.data?.message || "Something went wrong. Try again.";
-      toast.error(errorMessage,{id: toastId})
+      const errorMessage =
+        error?.data?.message || "Something went wrong. Try again.";
+      toast.error(errorMessage, { id: toastId });
     }
   }
   return (
@@ -115,7 +122,9 @@ export function RegisterForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="gap-1">Name<span className="text-red-500">*</span></FormLabel>
+                    <FormLabel className="gap-1">
+                      Name<span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="John Doe" {...field} />
                     </FormControl>
@@ -128,7 +137,9 @@ export function RegisterForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="gap-1">Email <span className="text-red-500">*</span></FormLabel>
+                    <FormLabel className="gap-1">
+                      Email <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="me@email.com" {...field} />
                     </FormControl>
@@ -141,7 +152,9 @@ export function RegisterForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="gap-1">Password <span className="text-red-500">*</span></FormLabel>
+                    <FormLabel className="gap-1">
+                      Password <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="********"
@@ -158,7 +171,9 @@ export function RegisterForm() {
                 name="phoneNo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="gap-1">Phone No <span className="text-red-500">*</span></FormLabel>
+                    <FormLabel className="gap-1">
+                      Phone No <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="018XXXXXXXX" {...field} />
                     </FormControl>
@@ -171,10 +186,43 @@ export function RegisterForm() {
                 name="nidNo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="gap-1">NID No <span className="text-red-500">*</span></FormLabel>
+                    <FormLabel className="gap-1">
+                      NID No <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="13 or 17 Digit NID Number" {...field} />
+                      <Input
+                        placeholder="13 or 17 Digit NID Number"
+                        {...field}
+                      />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="gap-1">
+                      Role <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={IRole.USER}>{IRole.USER}</SelectItem>
+                        <SelectItem value={IRole.AGENT}>
+                          {IRole.AGENT}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -186,7 +234,10 @@ export function RegisterForm() {
                   <FormItem>
                     <FormLabel>Address</FormLabel>
                     <FormControl>
-                        <Textarea placeholder="3/C, B Block, Road 7, Mirpur, Dhaka" {...field} />
+                      <Textarea
+                        placeholder="3/C, B Block, Road 7, Mirpur, Dhaka"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
