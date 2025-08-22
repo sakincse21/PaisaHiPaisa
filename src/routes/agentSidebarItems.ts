@@ -2,6 +2,7 @@ import AllTransactions from "@/components/modules/AllRoles/AllTransactions";
 import CheckWallet from "@/components/modules/AllRoles/CheckWallet";
 import Overview from "@/components/modules/AllRoles/Overview";
 import SendMoney from "@/components/modules/AllRoles/SendMoney";
+import { UpdateProfile } from "@/components/modules/AllRoles/UpdateProfile";
 import AddMoneyRequest from "@/pages/Agent/AddMoneyRequest";
 import CashIn from "@/pages/Agent/CashIn";
 import type { ISidebarItem } from "@/types";
@@ -16,7 +17,7 @@ export const agentSiderbarItems: ISidebarItem[] = [
       {
         title: "Add Money Requests",
         url: "/agent/add-money-requests",
-        component: AddMoneyRequest
+        component: AddMoneyRequest,
       },
       {
         title: "Cash In",
@@ -36,7 +37,7 @@ export const agentSiderbarItems: ISidebarItem[] = [
       {
         title: "Check Wallet",
         url: "/agent/check-wallet",
-        component: CheckWallet
+        component: CheckWallet,
       },
       {
         title: "All Transactions",
@@ -50,14 +51,24 @@ export const agentSiderbarItems: ISidebarItem[] = [
       },
     ],
   },
-//   {
-//     title: "Profile",
-//     items: [
-//       {
-//         title: "Update Profile",
-//         url: "/agent/update",
-//         component: AddTour,
-//       },
-//     ],
-//   },
+  {
+    title: "Profile",
+    items: [
+      {
+        title: "Update Profile",
+        url: "/agent/update-profile",
+        component: UpdateProfile,
+      }
+    ],
+  },
+  //   {
+  //     title: "Profile",
+  //     items: [
+  //       {
+  //         title: "Update Profile",
+  //         url: "/agent/update",
+  //         component: AddTour,
+  //       },
+  //     ],
+  //   },
 ];

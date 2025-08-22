@@ -9,8 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useUserInfoQuery } from "@/redux/features/Auth/auth.api";
-import { useAllTransactionsQuery } from "@/redux/features/User/user.api";
+import { useAllTransactionsQuery, useUserInfoQuery } from "@/redux/features/User/user.api";
 import { Link } from "react-router";
 import type { IItem } from "./AllTransactions";
 import { getSidebarItems } from "@/lib/getSidebarItems";

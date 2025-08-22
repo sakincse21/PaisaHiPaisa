@@ -12,8 +12,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {  useSendMoneyMutation } from "@/redux/features/Transaction/transaction.api";
+import { useSendMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
+import { useLazySearchUserQuery } from "@/redux/features/User/user.api";
 
 const sendMoneySchema = z.object({
   to: z
@@ -23,12 +24,14 @@ const sendMoneySchema = z.object({
     }),
   amount: z
     .number({ message: "Amount should be a valid number." })
-    .min(5, { message: "Add money amount cannot be less than 50." }),
+    .min(5, { message: "Add money amount cannot be less than 5." }),
   type: z.string({ message: "Transaction type must be a string." }),
 });
 
 const SendMoney = () => {
   const [sendMoney] = useSendMoneyMutation();
+  const [searchUser, { isLoading: isSearchLoading }] = useLazySearchUserQuery();
+  
   const form = useForm<z.infer<typeof sendMoneySchema>>({
     resolver: zodResolver(sendMoneySchema),
     defaultValues: {
@@ -44,15 +47,12 @@ const SendMoney = () => {
     try {
       const res = await sendMoney(formData).unwrap();
       if (res?.success) {
-        toast.success(
-          "Sent money successfully.",
-          { id: toastId }
-        );
+        toast.success("Sent money successfully.", { id: toastId });
         form.reset();
       } else {
         toast.error(res?.data?.message, { id: toastId });
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
       const errorMessage =
@@ -61,23 +61,45 @@ const SendMoney = () => {
     }
   };
 
+  const handleCheck = async () => {
+    const phoneNumber = form.getValues('to');
+    
+    if (!phoneNumber || phoneNumber.length > 11 || phoneNumber.length <11) {
+      toast.error("Please enter a valid phone number first.");
+      return;
+    }
+    
+    try {
+      const result = await searchUser(phoneNumber).unwrap();
+      console.log(result);
+      
+      if (result?.success) {
+        toast.success(`${result?.data?.role} found: ${result?.data?.name} (${result?.data?.phoneNo})`)
+      } else {
+        toast.error("User not found.");
+      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(error);
+      toast.error("Failed to search user.");
+    }
+  };
+
   return (
     <div className=" h-full flex flex-col justify-center items-center">
-        <Card className="w-full md:w-2xl">
-          <CardHeader>
-            <CardTitle>Send Money</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+      <Card className="w-full md:w-2xl">
+        <CardHeader>
+          <CardTitle>Send Money</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="flex justify-center items-end w-full gap-2">
                 <FormField
                   control={form.control}
                   name="to"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel className="gap-1">
                         Receiver No<span className="text-red-500">*</span>
                       </FormLabel>
@@ -88,36 +110,43 @@ const SendMoney = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="gap-1">
-                        Amount<span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter amount"
-                          {...field}
-                          onChange={(e) =>
-                            field.onChange(Number(e.target.value))
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full">
-                  Submit
+                <Button 
+                  type="button" 
+                  variant={"outline"} 
+                  onClick={handleCheck}
+                  disabled={isSearchLoading}
+                >
+                  {isSearchLoading ? "Checking..." : "Check"}
                 </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      
+              </div>
+              
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="gap-1">
+                      Amount<span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter amount"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

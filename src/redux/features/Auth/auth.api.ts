@@ -17,14 +17,6 @@ export const authApi = baseApi.injectEndpoints({
         body: userInfo,
       }),
     }),
-    userInfo: builder.query({
-      query: () => ({
-        url: "/user/me",
-        method: "GET",
-        // body: userInfo,
-      }),
-      providesTags: ["USER"]
-  }),
     logout: builder.mutation({
       query: () => ({
         url: "/auth/logout", //yet to implement
@@ -38,4 +30,4 @@ export const authApi = baseApi.injectEndpoints({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation, useLogoutMutation, useUserInfoQuery, useRegisterMutation } = authApi;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation } = authApi;

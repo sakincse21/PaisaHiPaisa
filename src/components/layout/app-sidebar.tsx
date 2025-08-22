@@ -16,12 +16,12 @@ import Logo from "@/assets/icons/logo";
 import {
   authApi,
   useLogoutMutation,
-  useUserInfoQuery,
-} from "@/redux/features/Auth/auth.api";
+  } from "@/redux/features/Auth/auth.api";
 import { getSidebarItems } from "@/lib/getSidebarItems";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/redux/hook";
 import { Link, useNavigate } from "react-router";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData } = useUserInfoQuery(undefined);
