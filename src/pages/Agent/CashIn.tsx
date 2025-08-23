@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { useCashInMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
+import SearchUser from "@/components/modules/AllRoles/SearchUser";
+import { IRole } from "@/constants";
 
 const cashInSchema = z.object({
   to: z
@@ -44,10 +46,7 @@ const CashIn = () => {
     try {
       const res = await cashIn(formData).unwrap();
       if (res?.success) {
-        toast.success(
-          "Cash in successful.",
-          { id: toastId }
-        );
+        toast.success("Cash in successful.", { id: toastId });
         form.reset();
       } else {
         toast.error(res?.data?.message, { id: toastId });
@@ -63,21 +62,19 @@ const CashIn = () => {
 
   return (
     <div className=" h-full flex flex-col justify-center items-center">
-        <Card className="w-full md:w-2xl">
-          <CardHeader>
-            <CardTitle>Cash In</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+      <Card className="w-full md:w-2xl">
+        <CardHeader>
+          <CardTitle>Cash In</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="flex justify-center items-end w-full gap-2">
                 <FormField
                   control={form.control}
                   name="to"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel className="gap-1">
                         User No<span className="text-red-500">*</span>
                       </FormLabel>
@@ -88,36 +85,35 @@ const CashIn = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="gap-1">
-                        Amount<span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter amount"
-                          {...field}
-                          onChange={(e) =>
-                            field.onChange(Number(e.target.value))
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full">
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      
+                <SearchUser form={form} requiredRole={IRole.USER} />
+              </div>
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="gap-1">
+                      Amount<span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter amount"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

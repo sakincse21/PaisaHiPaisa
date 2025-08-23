@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { useWithdrawMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
+import SearchUser from "@/components/modules/AllRoles/SearchUser";
+import { IRole } from "@/constants";
 
 const withdrawMoneySchema = z.object({
   to: z
@@ -67,21 +69,24 @@ const WithdrawMoney = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="to"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="gap-1">
-                      Agent No<span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="018XXXXXXXX" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex justify-center items-end w-full gap-2">
+                <FormField
+                  control={form.control}
+                  name="to"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel className="gap-1">
+                        Agent No<span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="018XXXXXXXX" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <SearchUser form={form} requiredRole={IRole.AGENT} />
+              </div>
               <FormField
                 control={form.control}
                 name="amount"

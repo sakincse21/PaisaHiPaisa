@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { useAddMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
+import SearchUser from "@/components/modules/AllRoles/SearchUser";
+import { IRole } from "@/constants";
 
 const addMoneySchema = z.object({
   to: z
@@ -63,21 +65,19 @@ const AddMoney = () => {
 
   return (
     <div className=" h-full flex flex-col justify-center items-center">
-        <Card className="w-full md:w-2xl">
-          <CardHeader>
-            <CardTitle>Add Money</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+      <Card className="w-full md:w-2xl">
+        <CardHeader>
+          <CardTitle>Add Money</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="flex justify-center items-end w-full gap-2">
                 <FormField
                   control={form.control}
                   name="to"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel className="gap-1">
                         Agent No<span className="text-red-500">*</span>
                       </FormLabel>
@@ -88,36 +88,35 @@ const AddMoney = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="gap-1">
-                        Amount<span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter amount"
-                          {...field}
-                          onChange={(e) =>
-                            field.onChange(Number(e.target.value))
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full">
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      
+                <SearchUser form={form} requiredRole={IRole.AGENT} />
+              </div>
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="gap-1">
+                      Amount<span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter amount"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

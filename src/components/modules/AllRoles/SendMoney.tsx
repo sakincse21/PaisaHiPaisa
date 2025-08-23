@@ -14,7 +14,9 @@ import {
 } from "@/components/ui/form";
 import { useSendMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
-import { useLazySearchUserQuery } from "@/redux/features/User/user.api";
+import SearchUser from "./SearchUser";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
+import LoadingScreen from "@/components/layout/LoadingScreen";
 
 const sendMoneySchema = z.object({
   to: z
@@ -30,7 +32,7 @@ const sendMoneySchema = z.object({
 
 const SendMoney = () => {
   const [sendMoney] = useSendMoneyMutation();
-  const [searchUser, { isLoading: isSearchLoading }] = useLazySearchUserQuery();
+  const {data:userData, isLoading:isUserLoading} = useUserInfoQuery(undefined);
   
   const form = useForm<z.infer<typeof sendMoneySchema>>({
     resolver: zodResolver(sendMoneySchema),
@@ -61,29 +63,10 @@ const SendMoney = () => {
     }
   };
 
-  const handleCheck = async () => {
-    const phoneNumber = form.getValues('to');
-    
-    if (!phoneNumber || phoneNumber.length > 11 || phoneNumber.length <11) {
-      toast.error("Please enter a valid phone number first.");
-      return;
-    }
-    
-    try {
-      const result = await searchUser(phoneNumber).unwrap();
-      console.log(result);
-      
-      if (result?.success) {
-        toast.success(`${result?.data?.role} found: ${result?.data?.name} (${result?.data?.phoneNo})`)
-      } else {
-        toast.error("User not found.");
-      }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.error(error);
-      toast.error("Failed to search user.");
-    }
-  };
+  if(isUserLoading){
+    return <LoadingScreen />
+  }
+
 
   return (
     <div className=" h-full flex flex-col justify-center items-center">
@@ -110,14 +93,7 @@ const SendMoney = () => {
                     </FormItem>
                   )}
                 />
-                <Button 
-                  type="button" 
-                  variant={"outline"} 
-                  onClick={handleCheck}
-                  disabled={isSearchLoading}
-                >
-                  {isSearchLoading ? "Checking..." : "Check"}
-                </Button>
+                <SearchUser form={form} requiredRole={userData?.data?.role} />
               </div>
               
               <FormField
