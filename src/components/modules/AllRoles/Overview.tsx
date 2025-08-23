@@ -9,10 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAllTransactionsQuery, useUserInfoQuery } from "@/redux/features/User/user.api";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
 import { Link } from "react-router";
 import type { IItem } from "./AllTransactions";
 import { getSidebarItems } from "@/lib/getSidebarItems";
+import { useAllTransactionsQuery } from "@/redux/features/Transaction/transaction.api";
 
 const Overview = () => {
   const { data: userData, isLoading: isUserLoading } =

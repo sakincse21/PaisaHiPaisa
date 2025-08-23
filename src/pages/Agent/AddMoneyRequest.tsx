@@ -9,8 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAddMoneyRequestMutation } from "@/redux/features/Transaction/transaction.api";
-import { useAllTransactionsQuery } from "@/redux/features/User/user.api";
+import { useAddMoneyRequestMutation, useAllTransactionsQuery } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
 
 export interface IItem {
