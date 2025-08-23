@@ -3,6 +3,14 @@ import { baseApi } from "@/redux/baseApi";
 
 export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    allTransactions: builder.query({
+      query: (params) => ({
+        url: "/transaction",
+        method: "GET",
+        params
+      }),
+      providesTags: ["TRANSACTIONS"]
+  }),
     addMoney: builder.mutation({
       query: (transaction) => ({
         url: "/transaction/add-money",
@@ -54,4 +62,5 @@ export const {
   useWithdrawMoneyMutation,
   useCashInMutation,
   useAddMoneyRequestMutation,
+  useAllTransactionsQuery
 } = transactionApi;
