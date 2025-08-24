@@ -31,6 +31,8 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"]
   }),
+  
+
 })})
 
 // Export hooks for usage in functional components, which are

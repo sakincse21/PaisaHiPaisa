@@ -84,7 +84,7 @@ const updatePasswordSchema = z.object({
 })
 
 export function UpdateProfile() {
-  const { data: userData, isLoading: isUserLoading } =
+  const { data: userData, isLoading: isUserLoading, refetch } =
     useUserInfoQuery(undefined);
 
   const [updateProfile] = useUpdateProfileMutation();
@@ -138,6 +138,7 @@ export function UpdateProfile() {
       const res = await updateProfile(payload).unwrap();
       if (res?.success) {
         toast.success("Profile updated successfully.", { id: toastId });
+        refetch();
       } else {
         toast.error(res?.data?.message, { id: toastId });
       }

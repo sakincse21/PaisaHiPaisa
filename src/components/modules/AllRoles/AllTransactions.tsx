@@ -122,7 +122,7 @@ export interface IFilters {
 }
 
 export default function AllTransactions() {
-  // const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<IFilters | null>(null);
   const { data, isLoading } = useAllTransactionsQuery(filters);
@@ -161,7 +161,7 @@ export default function AllTransactions() {
 
     setFilters(cleanedFilters);
     setCurrentPage(1);
-    // setOpenDialog(false);
+    setOpenDialog(false);
   }
 
   useEffect(() => {
@@ -172,6 +172,12 @@ export default function AllTransactions() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
+  const handleFilterClear = () => {
+    form.reset();
+    setFilters(null);
+    setOpenDialog(false);
+    setCurrentPage(1);
+  };
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -182,10 +188,10 @@ export default function AllTransactions() {
   const totalPage = data?.data?.meta?.totalPage || 1;
 
   return (
-    <div className="w-full h-full md:w-5xl mx-auto flex flex-col">
+    <div className="w-full flex flex-col justify-center items-center md:w-5xl">
       <div className="flex-1 overflow-hidden">
         <div className="w-full flex justify-end items-center my-3">
-          <Dialog>
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger>
               <span
                 className="py-2 px-4 rounded-lg border-2 border-gray-500"
@@ -270,7 +276,7 @@ export default function AllTransactions() {
                                 <SelectValue placeholder="Select Type" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
+                            <SelectContent >
                               {Object.values(ITransactionType).map(
                                 (eachType) => (
                                   <SelectItem key={eachType} value={eachType}>
@@ -415,7 +421,7 @@ export default function AllTransactions() {
                       name="limit"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Length</FormLabel>
+                          <FormLabel>Limit</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="10"
@@ -428,8 +434,18 @@ export default function AllTransactions() {
                       )}
                     />
                   </div>
-                  <div className="flex justify-end items-center">
-                    <Button type="submit">Apply</Button>
+                  <div className="flex justify-end items-center gap-3">
+                    <Button type="submit" variant={"default"}>
+                      Apply
+                    </Button>
+                    {/* <span className="py-1 px-4 rounded-lg" onClick={handleFilterClear}>Clear</span> */}
+                    <Button
+                      type="button"
+                      variant={"ghost"}
+                      onClick={handleFilterClear}
+                    >
+                      Clear
+                    </Button>
                   </div>
                 </form>
               </Form>

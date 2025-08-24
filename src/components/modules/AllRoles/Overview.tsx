@@ -53,7 +53,7 @@ const Overview = () => {
         </CardHeader>
         <CardContent className="w-full flex justify-around items-center">
           {quickActions.map((item) => (
-            <Link to={item.url}>
+            <Link to={item.url} key={item.url}>
               <Button className="font-semibold">{item.title}</Button>
             </Link>
           ))}

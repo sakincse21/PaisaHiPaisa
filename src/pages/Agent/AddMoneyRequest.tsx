@@ -9,7 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAddMoneyRequestMutation, useAllTransactionsQuery } from "@/redux/features/Transaction/transaction.api";
+import {
+  useAddMoneyRequestMutation,
+  useAllTransactionsQuery,
+} from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
 
 export interface IItem {
@@ -34,11 +37,11 @@ export default function AddMoneyRequest() {
   }
   console.log("all transactions", data);
   const items: IItem[] = data?.data?.data;
-  const handleAccept = async (transactionId: string) => {
+  const handleRequest = async (transactionId: string, consent: boolean) => {
     const payload = {
       transactionId,
       body: {
-        consent: true,
+        consent,
       },
     };
     const toastId = toast.loading("Add money request going on.");
@@ -59,44 +62,62 @@ export default function AddMoneyRequest() {
     }
   };
   return (
-    <div className="w-full h-full md:w-5xl mx-auto flex flex-col">
+    <div className="w-full flex flex-col justify-center items-center md:w-5xl ">
       <div className="flex-1 overflow-hidden">
-        <Card className="w-full md:w-fit">
+        <Card className="w-full md:w-4xl">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle>Pending Requests</CardTitle>
           </CardHeader>
           <CardContent className="w-full flex justify-around items-center">
-            <Table className="[&_td]:border-border [&_th]:border-border border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b h-full">
-              <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
-                <TableRow className="hover:bg-transparent">
-                  <TableHead>From</TableHead>
-                  <TableHead>To</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="overflow-y-auto">
-                {items?.map((item: IItem) => (
-                  <TableRow key={item._id}>
-                    <TableCell className="font-medium">{item.from}</TableCell>
-                    <TableCell>{item.to}</TableCell>
-                    <TableCell>{item.amount}</TableCell>
-                    <TableCell>{item.type}</TableCell>
-                    <TableCell>{item.status}</TableCell>
-                    <TableCell className="text-right">
-                      {new Date(item.createdAt).toLocaleString()}
-                    </TableCell>
-                    <TableCell className="flex flex-row gap-2">
-                      <Button className="bg-green-700" onClick={() => handleAccept(item._id)}>Accept</Button>
-                      <Button variant={"destructive"}>Reject</Button>
-                    </TableCell>
+            {items.length > 0 ? (
+              <Table className="[&_td]:border-border [&_th]:border-border border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b h-full">
+                <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead>From</TableHead>
+                    {/* <TableHead>To</TableHead> */}
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody className="overflow-y-auto">
+                  {items?.map((item: IItem) => (
+                    <TableRow key={item._id}>
+                      <TableCell className="font-medium">{item.from}</TableCell>
+                      {/* <TableCell>{item.to}</TableCell> */}
+                      <TableCell>{item.amount}</TableCell>
+                      <TableCell>{item.type}</TableCell>
+                      <TableCell>{item.status}</TableCell>
+                      <TableCell className="text-right">
+                        {new Date(item.createdAt).toLocaleString()}
+                      </TableCell>
+                      <TableCell className="flex flex-row gap-2">
+                        <Button
+                          className="bg-green-700"
+                          onClick={() => handleRequest(item._id, true)}
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          variant={"destructive"}
+                          onClick={() => handleRequest(item._id, false)}
+                        >
+                          Reject
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="w-full h-full flex justify-center items-center my-5">
+                <span className="font-semibold text-lg mt-8">
+                  You do not have any pending add money request.
+                </span>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
