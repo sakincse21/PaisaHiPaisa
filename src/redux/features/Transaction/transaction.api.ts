@@ -59,6 +59,14 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SUMMARY"]
   }),
+    refund: builder.mutation({
+      query: (transactionId) => ({
+        url: `/transaction/refund/${transactionId}`,
+        method: "POST",
+        // body: userInfo,
+      }),
+      invalidatesTags: ['TRANSACTIONS']
+  }),
   }),
 });
 
@@ -71,5 +79,6 @@ export const {
   useCashInMutation,
   useAddMoneyRequestMutation,
   useAllTransactionsQuery,
-  useSummaryQuery
+  useSummaryQuery,
+  useRefundMutation
 } = transactionApi;

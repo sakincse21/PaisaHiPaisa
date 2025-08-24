@@ -1,10 +1,8 @@
 import AllTransactions from "@/components/modules/AllRoles/AllTransactions";
-import CheckWallet from "@/components/modules/AllRoles/CheckWallet";
-import SendMoney from "@/components/modules/AllRoles/SendMoney";
 import { UpdateProfile } from "@/components/modules/AllRoles/UpdateProfile";
-import AddMoneyRequest from "@/pages/Agent/AddMoneyRequest";
-import AgentOverview from "@/pages/Agent/AgentOverview";
-import CashIn from "@/pages/Agent/CashIn";
+import AdminOverview from "@/pages/Admin/AdminOverview";
+import AllUsers from "@/pages/Admin/AllUsers";
+import ApproveUsers from "@/pages/Admin/ApproveUsers";
 import type { ISidebarItem } from "@/types";
 // import { lazy } from "react";
 
@@ -15,39 +13,29 @@ export const adminSiderbarItems: ISidebarItem[] = [
     title: "User Management",
     items: [
       {
-        title: "Add Money Requests",
-        url: "/agent/add-money-requests",
-        component: AddMoneyRequest,
+        title: "Approve Users",
+        url: "/admin/approve-users",
+        component: ApproveUsers,
       },
       {
-        title: "Cash In",
-        url: "/agent/cash-in",
-        component: CashIn,
-      },
-      {
-        title: "Send Money",
-        url: "/agent/send-money",
-        component: SendMoney,
+        title: "All Users",
+        url: "/admin/all-users",
+        component: AllUsers,
       },
     ],
   },
   {
-    title: "Wallet",
+    title: "Transactions",
     items: [
       {
-        title: "Check Wallet",
-        url: "/agent/check-wallet",
-        component: CheckWallet,
-      },
-      {
         title: "All Transactions",
-        url: "/agent/all-transactions",
+        url: "/admin/all-transactions",
         component: AllTransactions,
       },
       {
         title: "Overview",
-        url: "/agent/overview",
-        component: AgentOverview,
+        url: "/admin/overview",
+        component: AdminOverview,
       },
     ],
   },
@@ -56,7 +44,7 @@ export const adminSiderbarItems: ISidebarItem[] = [
     items: [
       {
         title: "Update Profile",
-        url: "/agent/update-profile",
+        url: "/admin/update-profile",
         component: UpdateProfile,
       }
     ],
