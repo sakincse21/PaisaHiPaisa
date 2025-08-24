@@ -51,6 +51,14 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTIONS","USER"],
     }),
+    summary: builder.query({
+      query: () => ({
+        url: "/transaction/summary",
+        method: "GET",
+        // body: userInfo,
+      }),
+      providesTags: ["SUMMARY"]
+  }),
   }),
 });
 
@@ -62,5 +70,6 @@ export const {
   useWithdrawMoneyMutation,
   useCashInMutation,
   useAddMoneyRequestMutation,
-  useAllTransactionsQuery
+  useAllTransactionsQuery,
+  useSummaryQuery
 } = transactionApi;

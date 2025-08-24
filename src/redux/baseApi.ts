@@ -7,6 +7,6 @@ export const baseApi = createApi({
     baseUrl: `${envVars.backendBaseUrl}/api/v1`,
     credentials: "include",
   }),
-  tagTypes: ["USER", "TRANSACTIONS"],
+  tagTypes: ["USER", "TRANSACTIONS","SUMMARY"],
   endpoints: () => ({}),
 });
