@@ -32,7 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { IRole, IStatus, ITransactionSort } from "@/constants";
+import { IRole, ITransactionSort } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -47,10 +47,11 @@ import {
 } from "@/components/ui/pagination";
 import {
   useGetAllUsersQuery,
+  useUpdateUserMutation,
   useUserInfoQuery,
 } from "@/redux/features/User/user.api";
-import ActionDialog from "./ActionDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export interface IUser {
   _id: string;
@@ -70,10 +71,6 @@ export interface IUser {
 
 const filterSchema = z.object({
   searchTerm: z.string().optional().or(z.literal("")),
-  status: z
-    .enum([...Object.values(IStatus)] as [string, ...string[]])
-    .optional()
-    .or(z.literal("")),
   role: z
     .enum([...Object.values(IRole)] as [string, ...string[]])
     .or(z.literal("")),
@@ -83,47 +80,45 @@ const filterSchema = z.object({
     .or(z.literal("")),
   sortBy: z.string().optional(),
   limit: z.string().optional(),
-  isVerified: z.string().optional(),
+  isVerified: z.string(),
 });
 
 export interface IFilters {
   searchTerm?: string;
   role?: string;
-  status?: string;
   sort?: string;
   limit?: string;
   page?: string;
   sortBy?: string;
-  isVerified?: string;
+  isVerified: string;
 }
 
 const sortByOptions: string[] = ["name", "phoneNo", "nidNo", "email"];
 
-export default function AllUsers({ role }: { role: string }) {
+export default function VerifyUsers() {
   const [openDialog, setOpenDialog] = useState(false);
+  const [updateUser] = useUpdateUserMutation();
+
   const [currentPage, setCurrentPage] = useState(1);
-  const defaultFilter = {
-    role,
-    sortBy: "name",
+  const defaultFilter: IFilters = {
+    sortBy: "createdAt",
     sort: "asc",
+    isVerified: "false",
   };
   const [filters, setFilters] = useState<IFilters | null>(defaultFilter);
   const { data, isLoading } = useGetAllUsersQuery(filters);
   const { data: userData } = useUserInfoQuery(filters);
 
   console.log(data);
-  console.log(role, "given role");
 
   const form = useForm<z.infer<typeof filterSchema>>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
       searchTerm: "",
-      status: "",
-      role,
-      sort: "asc",
+      sort: "desc",
       limit: "10",
-      sortBy: "name",
-      isVerified: "",
+      sortBy: "createdAt",
+      isVerified: "false",
     },
   });
 
@@ -133,7 +128,10 @@ export default function AllUsers({ role }: { role: string }) {
       Object.entries(values).filter(([_, v]) => v !== "" && v !== undefined)
     );
 
-    setFilters(cleanedFilters);
+    setFilters({
+      ...cleanedFilters,
+      isVerified: "false",
+    } as IFilters);
     setCurrentPage(1);
     setOpenDialog(false);
   }
@@ -142,6 +140,7 @@ export default function AllUsers({ role }: { role: string }) {
     setFilters({
       ...filters,
       page: currentPage.toString(),
+      isVerified: "false",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
@@ -156,6 +155,28 @@ export default function AllUsers({ role }: { role: string }) {
   if (isLoading) {
     return <LoadingScreen />;
   }
+
+  const handleConfirm = async (userId: string) => {
+    const toastId = toast.loading("Updating user.");
+    try {
+      const payload = {
+        isVerified: true,
+        userId,
+      };
+      const res = await updateUser(payload).unwrap();
+      if (res?.success) {
+        toast.success("User updated successfully.", { id: toastId });
+      } else {
+        toast.error(res?.data?.message, { id: toastId });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(error);
+      const errorMessage =
+        error?.data?.message || "Something went wrong. Try again.";
+      toast.error(errorMessage, { id: toastId });
+    }
+  };
   console.log(userData);
 
   console.log("all transactions", data);
@@ -166,7 +187,7 @@ export default function AllUsers({ role }: { role: string }) {
     <div className="w-full flex flex-col justify-center items-center md:w-5xl">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>All {role}</CardTitle>
+          <CardTitle>Verify New Users</CardTitle>
         </CardHeader>
         <CardContent className="text-center">
           <div className="flex-1 overflow-hidden">
@@ -184,7 +205,7 @@ export default function AllUsers({ role }: { role: string }) {
                 {/* {openDialog && ( */}
                 <DialogContent className="flex flex-col">
                   <DialogHeader>
-                    <DialogTitle>Filter {role}</DialogTitle>
+                    <DialogTitle>Apply Filter</DialogTitle>
                     <DialogDescription>
                       Apply filters to narrow down your results.
                     </DialogDescription>
@@ -201,73 +222,43 @@ export default function AllUsers({ role }: { role: string }) {
                           <FormItem>
                             <FormLabel>Search</FormLabel>
                             <FormControl>
-                              <Input placeholder="Name, Email, Phone, Nid No" {...field} />
+                              <Input
+                                placeholder="Name, Email, Phone, Nid No"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-
-                      <div className="flex justify-between items-center gap-2">
-                        <FormField
-                          control={form.control}
-                          name="status"
-                          render={({ field }) => (
-                            <FormItem className="flex-1">
-                              <FormLabel className="gap-1">Status</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value as string}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select status" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {Object.values(IStatus).map((eachStatus) => (
-                                    <SelectItem
-                                      key={eachStatus}
-                                      value={eachStatus}
-                                    >
-                                      {eachStatus}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="role"
-                          render={({ field }) => (
-                            <FormItem className="flex-1">
-                              <FormLabel className="gap-1">Role</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value as string}
-                                disabled
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select Role" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {Object.values(IRole).map((eachType) => (
-                                    <SelectItem key={eachType} value={eachType}>
-                                      {eachType}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                      <FormField
+                        control={form.control}
+                        name="role"
+                        render={({ field }) => (
+                          <FormItem className="flex-1">
+                            <FormLabel className="gap-1">Role</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value as string}
+                              disabled
+                            >
+                              <FormControl>
+                                <SelectTrigger className="w-full">
+                                  <SelectValue placeholder="Select Role" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {Object.values(IRole).map((eachType) => (
+                                  <SelectItem key={eachType} value={eachType}>
+                                    {eachType}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
                       <div className="flex justify-end items-end gap-3">
                         <FormField
@@ -296,30 +287,6 @@ export default function AllUsers({ role }: { role: string }) {
                                       </SelectItem>
                                     )
                                   )}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="isVerified"
-                          render={({ field }) => (
-                            <FormItem className="flex-1">
-                              <FormLabel>Verified</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Verified" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value={"true"}>Yes</SelectItem>
-                                  <SelectItem value={"false"}>No</SelectItem>
                                 </SelectContent>
                               </Select>
                               <FormMessage />
@@ -408,9 +375,8 @@ export default function AllUsers({ role }: { role: string }) {
                       <TableHead>Role</TableHead>
                       <TableHead>Email</TableHead>
                       <TableHead>Phone</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Verified</TableHead>
-                      <TableHead className="text-right">Action</TableHead>
+                      <TableHead>NID No</TableHead>
+                      <TableHead className="text-right">Verified?</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody className="overflow-y-auto">
@@ -422,10 +388,14 @@ export default function AllUsers({ role }: { role: string }) {
                         <TableCell>{user.role}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.phoneNo}</TableCell>
-                        <TableCell>{user.status}</TableCell>
-                        <TableCell>{user.isVerified ? "YES" : "NO"}</TableCell>
+                        <TableCell>{user.nidNo}</TableCell>
                         <TableCell className="text-right">
-                          <ActionDialog userId={user._id} />
+                          <Button
+                            type="button"
+                            onClick={() => handleConfirm(user._id)}
+                          >
+                            Confirm
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -478,7 +448,7 @@ export default function AllUsers({ role }: { role: string }) {
             ) : (
               <div className="w-full h-full flex justify-center">
                 <span className="font-semibold text-lg mt-8">
-                  No {role} found. Try changing filters.
+                  No new users found. Try changing filters.
                 </span>
               </div>
             )}

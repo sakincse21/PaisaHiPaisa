@@ -8,32 +8,32 @@ const AgentCharts = () => {
   if(isLoading){
     return <LoadingScreen />
   }
-  console.log("sumamry data",data);
-  const tempTransactionChartData:IDataForBarChart[]=data?.data?.map((each: { Type: string; Amount: string; })=>(
+  // console.log("sumamry data",data);
+  const tempTransactionChartData:IDataForBarChart[]=data?.data?.map((each: { Label: string; Amount: string; })=>(
     {
-      Label: each.Type,
+      Label: each.Label,
       Amount: each.Amount
     }
   ))
   const transactionChartData:IBarChartData = {
     chartData: tempTransactionChartData,
     footer: "Total transaction amount: BDT",
-    title: "Transaction Type/Amount"
+    title: "Transaction Type vs Amount"
   }
-  const tempVolumeChartData:IDataForBarChart[]=data?.data?.map((each: { Type: string; Volume: string; })=>(
+  const tempVolumeChartData:IDataForBarChart[]=data?.data?.map((each: { Label: string; Volume: string; })=>(
     {
-      Label: each.Type,
+      Label: each.Label,
       Amount: each.Volume
     }
   ))
   const volumeChartData:IBarChartData = {
     chartData: tempVolumeChartData,
     footer: "Total transactions: ",
-    title: "Transaction Type/Volume"
+    title: "Transaction Type vs Volume"
   }
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <Card className="w-full md:w-3xl">
+      <Card className="w-full md:w-5xl">
         <CardHeader>
           <CardTitle>Last 30Days Summary</CardTitle>
         </CardHeader>
