@@ -1,7 +1,13 @@
-const AdminOverview = () => {
+import AdminCharts from "@/components/modules/Admin/AdminCharts"
+import Overview from "@/components/modules/AllRoles/Overview"
+
+const AgentOverview = () => {
   return (
-    <div>AdminOverview</div>
+    <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+        <Overview />
+        <AdminCharts />
+    </div>
   )
 }
 
-export default AdminOverview
+export default AgentOverview

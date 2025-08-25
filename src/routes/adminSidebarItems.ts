@@ -2,8 +2,9 @@ import AllTransactions from "@/components/modules/AllRoles/AllTransactions";
 import { UpdateProfile } from "@/components/modules/AllRoles/UpdateProfile";
 import AdminOverview from "@/pages/Admin/AdminOverview";
 import AllUsers from "@/pages/Admin/AllUsers";
-import ApproveUsers from "@/pages/Admin/ApproveUsers";
 import type { ISidebarItem } from "@/types";
+import { IRole } from "@/constants";
+import VerifyUsers from "@/pages/Admin/VerifyUsers";
 // import { lazy } from "react";
 
 // const Analytics = lazy(() => import("@/pages/Admin/Analytics"))
@@ -13,14 +14,19 @@ export const adminSiderbarItems: ISidebarItem[] = [
     title: "User Management",
     items: [
       {
-        title: "Approve Users",
-        url: "/admin/approve-users",
-        component: ApproveUsers,
+        title: "Verify Users",
+        url: "/admin/verify-users",
+        component: VerifyUsers,
       },
       {
-        title: "All Users",
-        url: "/admin/all-users",
-        component: AllUsers,
+        title: "Manage Users",
+        url: "/admin/manage-users",
+        component: (() => AllUsers({role:IRole.USER}) ),
+      },
+      {
+        title: "Manage Agents",
+        url: "/admin/manage-agents",
+        component: (() => AllUsers({role:IRole.AGENT})),
       },
     ],
   },

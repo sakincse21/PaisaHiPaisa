@@ -6,6 +6,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
+import { ModeToggle } from "../ui/mode-toggle";
+import { DotPattern } from "../ui/shadcn-io/dot-pattern";
 
 export default function DashboardLayout() {
   return (
@@ -18,8 +20,17 @@ export default function DashboardLayout() {
             orientation="vertical"
             className="mr-2 data-[orientation=vertical]:h-4"
           />
+          <div className="ml-auto">
+            <ModeToggle />
+          </div>
         </header>
         <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4">
+          <DotPattern
+            className="absolute inset-0 text-neutral-400/40"
+            width={20}
+            height={20}
+            glow={true}
+          />
           <Outlet />
         </div>
       </SidebarInset>

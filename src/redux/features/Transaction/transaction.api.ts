@@ -59,6 +59,14 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SUMMARY"]
   }),
+    adminSummary: builder.query({
+      query: () => ({
+        url: "/transaction/admin/summary",
+        method: "GET",
+        // body: userInfo,
+      }),
+      providesTags: ['ADMIN_SUMMARY']
+  }),
     refund: builder.mutation({
       query: (transactionId) => ({
         url: `/transaction/refund/${transactionId}`,
@@ -80,5 +88,6 @@ export const {
   useAddMoneyRequestMutation,
   useAllTransactionsQuery,
   useSummaryQuery,
-  useRefundMutation
+  useRefundMutation,
+  useAdminSummaryQuery
 } = transactionApi;

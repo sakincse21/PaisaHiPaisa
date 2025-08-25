@@ -29,7 +29,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "PATCH",
         body:payload,
       }),
-      invalidatesTags: ["SINGLEUSER","USERS"],
+      invalidatesTags: ["SINGLEUSER","USERS","ADMIN_SUMMARY"],
     }),
     userInfo: builder.query({
       query: () => ({

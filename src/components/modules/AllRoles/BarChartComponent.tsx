@@ -28,6 +28,7 @@ export interface IBarChartData {
   chartData: IDataForBarChart[];
   footer: string;
   title: string;
+  totalCount?: number;
 }
 
 const chartConfig = {
@@ -39,7 +40,7 @@ const chartConfig = {
 
 export default function BarChartComponent(barChartData: IBarChartData) {
   const chartData = barChartData.chartData;
-  const totalAmount = chartData.reduce((accumulator, currentValue) => accumulator + currentValue.Amount, 0);
+  const totalAmount = barChartData.totalCount || chartData.reduce((accumulator, currentValue) => accumulator + currentValue.Amount, 0);
   return (
     <Card>
       <CardHeader>
