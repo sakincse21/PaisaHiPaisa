@@ -17,6 +17,7 @@ import Overview from "@/components/modules/AllRoles/Overview";
 import { adminSiderbarItems } from "./adminSidebarItems";
 import AgentOverview from "@/pages/Agent/AgentOverview";
 import AdminOverview from "@/pages/Admin/AdminOverview";
+import { superAdminSiderbarItems } from "./superAdminSiderbarItems";
 
 export const router = createBrowserRouter([
   {
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: WithAuth(DashboardLayout, IRole.ADMIN as TRole),
+    Component: WithAuth(DashboardLayout, [IRole.ADMIN as TRole, IRole.SUPER_ADMIN as TRole]),
     children: [
       {
         index: true,
@@ -61,8 +62,19 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: "/super_admin",
+    Component: WithAuth(DashboardLayout, [IRole.ADMIN as TRole, IRole.SUPER_ADMIN as TRole]),
+    children: [
+      {
+        index: true,
+        Component: AdminOverview,
+      },
+      ...generateRoutes(superAdminSiderbarItems),
+    ],
+  },
+  {
     path: "/user",
-    Component: WithAuth(DashboardLayout, IRole.USER as TRole),
+    Component: WithAuth(DashboardLayout, [IRole.USER as TRole]),
     children: [
       {
         index: true,
@@ -73,7 +85,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/agent",
-    Component: WithAuth(DashboardLayout, IRole.AGENT as TRole),
+    Component: WithAuth(DashboardLayout, [IRole.AGENT as TRole]),
     children: [
       {
         index: true,

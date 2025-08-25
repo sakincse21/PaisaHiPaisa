@@ -11,29 +11,31 @@ import { DotPattern } from "../ui/shadcn-io/dot-pattern";
 
 export default function DashboardLayout() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
-          <div className="ml-auto">
-            <ModeToggle />
+    <div className="relative min-h-screen">
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset className="relative z-10">
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <div className="ml-auto">
+              <ModeToggle />
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4">
+            <DotPattern
+              className="fixed inset-0 w-full h-full text-accent-foreground opacity-35 z-0"
+              width={20}
+              height={20}
+              glow={true}
+            />
+            <Outlet />
           </div>
-        </header>
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4">
-          <DotPattern
-            className="absolute inset-0 text-neutral-400/40"
-            width={20}
-            height={20}
-            glow={true}
-          />
-          <Outlet />
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 import { IRole } from "@/constants";
 import { adminSiderbarItems } from "@/routes/adminSidebarItems";
 import { agentSiderbarItems } from "@/routes/agentSidebarItems";
+import { superAdminSiderbarItems } from "@/routes/superAdminSiderbarItems";
 import { userSiderbarItems } from "@/routes/userSidebarItems";
 import type { TRole } from "@/types/user";
 
@@ -17,6 +18,8 @@ export const getSidebarItems = (userRole: TRole) => {
       return [...userSiderbarItems];
     case IRole.ADMIN:
       return [...adminSiderbarItems];
+    case IRole.SUPER_ADMIN:
+      return [...superAdminSiderbarItems];
     default:
       return [];
   }
