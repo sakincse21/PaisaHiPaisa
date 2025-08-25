@@ -127,7 +127,7 @@ export function DotPattern({
       </defs>
       {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      dots.map((dot, index) => (
+      dots.map((dot) => (
         <motion.circle
           key={`${dot.x}-${dot.y}`}
           cx={dot.x}
