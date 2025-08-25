@@ -3,16 +3,16 @@ import type { TRole } from "@/types/user";
 import type { ComponentType } from "react";
 import { Navigate } from "react-router";
 
-export const WithAuth = (Component: ComponentType, requiredRole?: TRole) => {
+export const WithAuth = (Component: ComponentType, requiredRoles?: TRole[]) => {
   return function AuthWrapper() {
-    console.log(requiredRole);
+    console.log(requiredRoles);
 
     const { data, isLoading } = useUserInfoQuery(undefined);
 
     if (!isLoading && !data?.data?.email) {
       return <Navigate to={"/login"} />;
     }
-    if (!isLoading && requiredRole !== data?.data?.role) {
+    if (!isLoading && !requiredRoles?.includes(data?.data?.role)) {
       return <Navigate to={"/unauthorized"} />;
     }
     return <Component />;

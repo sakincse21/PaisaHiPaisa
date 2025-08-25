@@ -10,9 +10,7 @@ const CommonLayout = ({ children }: IProps) => {
   return (
     <div className=" min-h-screen flex flex-col contaier">
       <Navbar />
-      <div className="grow-1">
-      {children}
-      </div>
+      <div className="grow-1">{children}</div>
       <Footer />
     </div>
   );

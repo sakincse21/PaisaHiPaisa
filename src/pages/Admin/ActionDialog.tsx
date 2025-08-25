@@ -29,6 +29,7 @@ import {
   useLazyGetSingleUserQuery,
   useUpdateUserMutation,
 } from "@/redux/features/User/user.api";
+import type { TRole } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -67,7 +68,7 @@ export interface IUpdates {
   nidNo: string;
 }
 
-const ActionDialog = ({ userId }: { userId: string }) => {
+const ActionDialog = ({ userId, role }: { userId: string, role?: string }) => {
   const [openDialog, setOpenDialog] = useState(false);
   //   const [filters, setFilters] = useState<IFilters | null>(null);
   const [updateUser] = useUpdateUserMutation();
@@ -113,6 +114,8 @@ const ActionDialog = ({ userId }: { userId: string }) => {
     );
   }
 
+  const roleArray:TRole[] = role===IRole.SUPER_ADMIN? [IRole.ADMIN,IRole.AGENT,IRole.USER]:[IRole.AGENT,IRole.USER];
+
   async function onSubmit(values: z.infer<typeof updateSchema>) {
     const toastId = toast.loading("Updating user.");
     try {
@@ -141,13 +144,13 @@ const ActionDialog = ({ userId }: { userId: string }) => {
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger asChild>
           <span className="py-2 px-4 rounded-lg bg-primary text-white">
-            Update User
+            Update
           </span>
         </DialogTrigger>
 
         <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle>Update User</DialogTitle>
+            <DialogTitle>Update {role}</DialogTitle>
             <DialogDescription>Update the info of a user.</DialogDescription>
           </DialogHeader>
           {isLoading ? (
@@ -229,7 +232,7 @@ const ActionDialog = ({ userId }: { userId: string }) => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {[IRole.AGENT, IRole.USER].map((eachType) => (
+                            {roleArray.map((eachType) => (
                               <SelectItem key={eachType} value={eachType}>
                                 {eachType}
                               </SelectItem>

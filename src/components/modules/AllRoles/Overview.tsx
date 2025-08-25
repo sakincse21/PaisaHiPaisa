@@ -14,6 +14,7 @@ import { Link } from "react-router";
 import type { IItem } from "./AllTransactions";
 import { getSidebarItems } from "@/lib/getSidebarItems";
 import { useAllTransactionsQuery } from "@/redux/features/Transaction/transaction.api";
+import type { TRole } from "@/types/user";
 import { IRole } from "@/constants";
 
 const Overview = () => {
@@ -22,7 +23,9 @@ const Overview = () => {
   const { data: transactionData, isLoading: isTransactionLoading } =
     useAllTransactionsQuery({ limit: 3 });
 
-  const role = (userData?.data?.role as string)?.toLowerCase();
+  const role = (
+    (userData?.data?.role) as TRole
+  )?.toLowerCase();
   if (isUserLoading || isTransactionLoading) {
     return <LoadingScreen />;
   }
@@ -33,8 +36,7 @@ const Overview = () => {
   const items: IItem[] = transactionData?.data?.data;
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-8">
-      {userData?.data?.role === IRole.ADMIN ||
-      userData.role === IRole.SUPER_ADMIN ? (
+      {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) ? (
         <></>
       ) : (
         <Card className="w-full md:w-5xl">
@@ -52,7 +54,6 @@ const Overview = () => {
           </CardContent>
         </Card>
       )}
-
       <Card className="w-full md:w-5xl">
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
@@ -60,14 +61,13 @@ const Overview = () => {
         <CardContent className="w-full flex justify-around items-center">
           {quickActions.map((item) => (
             <Link to={item.url} key={item.url}>
-              <Button className="font-semibold">{item.title}</Button>
+              <Button className="font-semibold"  type={'button'} variant={'default'}>{item.title}</Button>
             </Link>
           ))}
         </CardContent>
       </Card>
 
-      {userData?.data?.role === IRole.ADMIN ||
-      userData.role === IRole.SUPER_ADMIN ? (
+      {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) ? (
         <></>
       ) : (
         <Card className="w-full md:w-5xl">

@@ -147,8 +147,15 @@ export default function AllUsers({ role }: { role: string }) {
   }, [currentPage]);
 
   const handleFilterClear = () => {
-    form.reset();
-    setFilters(null);
+    form.resetField('isVerified');
+    form.resetField('role');
+    form.resetField('searchTerm');
+    setFilters({
+      role,
+      sort: "asc",
+      limit: "10",
+      sortBy: "name",
+    });
     setOpenDialog(false);
     setCurrentPage(1);
   };
@@ -425,7 +432,7 @@ export default function AllUsers({ role }: { role: string }) {
                         <TableCell>{user.status}</TableCell>
                         <TableCell>{user.isVerified ? "YES" : "NO"}</TableCell>
                         <TableCell className="text-right">
-                          <ActionDialog userId={user._id} />
+                          <ActionDialog userId={user._id} role={userData?.data?.role} />
                         </TableCell>
                       </TableRow>
                     ))}
