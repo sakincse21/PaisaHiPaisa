@@ -41,7 +41,7 @@ const CashIn = () => {
   });
 
   const onSubmit = async (formData: z.infer<typeof cashInSchema>) => {
-    console.log(formData);
+    // console.log(formData);
     const toastId = toast.loading("Cash in going on.");
     try {
       const res = await cashIn(formData).unwrap();

@@ -126,7 +126,7 @@ export function UpdateProfile() {
   async function onSubmitUpdateProfile(
     formData: z.infer<typeof updateProfileSchema>
   ) {
-    console.log(formData);
+    // console.log(formData);
 
     const toastId = toast.loading("Updating Profile...");
     const payload = {
@@ -155,7 +155,7 @@ export function UpdateProfile() {
   async function onSubmitUpdatePassword(
     formData: z.infer<typeof updatePasswordSchema>
   ) {
-    console.log(formData);
+    // console.log(formData);
 
     const toastId = toast.loading("Updating password...");
 

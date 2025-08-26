@@ -12,7 +12,7 @@ const AgentCharts = () => {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  console.log("sumamry data", data);
+  // console.log("sumamry data", data);
   const tempUserChartData: IDataForBarChart[] = data?.data[0].filter(
     (each: { Label: string; Amount: string }) =>
       each.Label !== "Total"

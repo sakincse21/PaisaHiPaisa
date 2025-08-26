@@ -138,7 +138,7 @@ export default function AllTransactions() {
   const { data, isLoading } = useAllTransactionsQuery(filters);
   const { data: userData } = useUserInfoQuery(undefined);
 
-  console.log(data);
+  // console.log(data);
 
   const form = useForm<z.infer<typeof filterSchema>>({
     resolver: zodResolver(filterSchema),
@@ -194,10 +194,10 @@ export default function AllTransactions() {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  console.log(userData);
+  // console.log(userData);
 
   const handleRefund = async (transactionId: string) => {
-    console.log(transactionId);
+    // console.log(transactionId);
 
     const toastId = toast.loading("Initiating refund...");
     try {
@@ -216,7 +216,7 @@ export default function AllTransactions() {
     }
   };
 
-  console.log("all transactions", data);
+  // console.log("all transactions", data);
   const items: IItem[] = data?.data?.data;
   const totalPage = data?.data?.meta?.totalPage || 1;
 
@@ -252,20 +252,24 @@ export default function AllTransactions() {
                       onSubmit={form.handleSubmit(onSubmit)}
                       className="space-y-8"
                     >
-                      <FormField
-                        control={form.control}
-                        name="searchTerm"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Wallet ID</FormLabel>
-                            <FormControl>
-                              <Input placeholder="018XXXXXXXX" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
+                      {userData?.data?.role === IRole.ADMIN ||
+                      userData?.data?.role === IRole.SUPER_ADMIN ? (
+                        <FormField
+                          control={form.control}
+                          name="searchTerm"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Wallet ID</FormLabel>
+                              <FormControl>
+                                <Input placeholder="018XXXXXXXX" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      ) : (
+                        <></>
+                      )}
                       <div className="flex justify-between items-center gap-2">
                         <FormField
                           control={form.control}

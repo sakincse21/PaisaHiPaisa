@@ -111,8 +111,8 @@ export default function AllUsers({ role }: { role: string }) {
   const { data, isLoading } = useGetAllUsersQuery(filters);
   const { data: userData } = useUserInfoQuery(filters);
 
-  console.log(data);
-  console.log(role, "given role");
+  // console.log(data);
+  // console.log(role, "given role");
 
   const form = useForm<z.infer<typeof filterSchema>>({
     resolver: zodResolver(filterSchema),
@@ -163,9 +163,9 @@ export default function AllUsers({ role }: { role: string }) {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  console.log(userData);
+  // console.log(userData);
 
-  console.log("all transactions", data);
+  // console.log("all transactions", data);
   const users: IUser[] = data?.data?.data;
   const totalPage = data?.data?.meta?.totalPage || 1;
 

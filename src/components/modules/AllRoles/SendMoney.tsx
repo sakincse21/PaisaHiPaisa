@@ -44,7 +44,7 @@ const SendMoney = () => {
   });
 
   const onSubmit = async (formData: z.infer<typeof sendMoneySchema>) => {
-    console.log(formData);
+    // console.log(formData);
     const toastId = toast.loading("Sending money.");
     try {
       const res = await sendMoney(formData).unwrap();

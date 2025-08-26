@@ -8,7 +8,7 @@ const CheckWallet = () => {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  console.log(data);
+  // console.log(data);
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       <Card className="w-lg">

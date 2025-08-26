@@ -31,7 +31,7 @@ const Overview = () => {
   }
 
   const quickActions = getSidebarItems(userData?.data?.role)[0]?.items;
-  console.log(quickActions);
+  // console.log(quickActions);
 
   const items: IItem[] = transactionData?.data?.data;
   return (

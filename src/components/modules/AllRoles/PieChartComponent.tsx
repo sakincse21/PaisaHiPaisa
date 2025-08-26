@@ -46,7 +46,7 @@ export function PieChartComponent(pieChartData: IBarChartData) {
     },
   } satisfies ChartConfig;
 
-  console.log(chartData, "chartdata");
+  // console.log(chartData, "chartdata");
 
   const totalUsers = chartData.reduce((acc, curr) => acc + curr.visitors, 0);
 

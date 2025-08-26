@@ -5,7 +5,7 @@ import { Navigate } from "react-router";
 
 export const WithAuth = (Component: ComponentType, requiredRoles?: TRole[]) => {
   return function AuthWrapper() {
-    console.log(requiredRoles);
+    // console.log(requiredRoles);
 
     const { data, isLoading } = useUserInfoQuery(undefined);
 

@@ -41,7 +41,7 @@ const AddMoney = () => {
   });
 
   const onSubmit = async (formData: z.infer<typeof addMoneySchema>) => {
-    console.log(formData);
+    // console.log(formData);
     const toastId = toast.loading("Requesting money to agent.");
     try {
       const res = await addMoney(formData).unwrap();
