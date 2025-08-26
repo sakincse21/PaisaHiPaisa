@@ -35,7 +35,7 @@ const Overview = () => {
 
   const items: IItem[] = transactionData?.data?.data;
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+    <div className="min-w-2xl w-full h-full flex flex-col justify-center items-center gap-8">
       {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) ? (
         <></>
       ) : (
@@ -58,7 +58,7 @@ const Overview = () => {
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
-        <CardContent className="w-full flex justify-around items-center">
+        <CardContent className="w-full flex justify-center items-center flex-wrap gap-5">
           {quickActions.map((item) => (
             <Link to={item.url} key={item.url}>
               <Button className="font-semibold"  type={'button'} variant={'default'}>{item.title}</Button>
@@ -74,7 +74,7 @@ const Overview = () => {
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>
-          <CardContent className="w-full flex flex-col justify-around items-center">
+          <CardContent className="w-full flex flex-col justify-around items-center md:w-5xl">
             <Table className="[&_td]:border-border [&_th]:border-border border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b h-full">
               <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
                 <TableRow className="hover:bg-transparent">
@@ -101,7 +101,7 @@ const Overview = () => {
                 ))}
               </TableBody>
             </Table>
-            <div className="w-full flex justify-end items-center mt-4">
+            <div className="w-full md:w-5xl flex justify-end items-center mt-4 px-8">
               <Link to={`/${role}/all-transactions`}>
                 <Button variant={"outline"}>See more</Button>
               </Link>

@@ -7,7 +7,6 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import Unauthorized from "@/pages/Auth/Unauthorized";
 import About from "@/pages/Public/About";
-import Faq from "@/pages/Public/Faq";
 import Features from "@/pages/Public/Features";
 import type { TRole } from "@/types/user";
 import { createBrowserRouter } from "react-router";
@@ -18,12 +17,21 @@ import { adminSiderbarItems } from "./adminSidebarItems";
 import AgentOverview from "@/pages/Agent/AgentOverview";
 import AdminOverview from "@/pages/Admin/AdminOverview";
 import { superAdminSiderbarItems } from "./superAdminSiderbarItems";
+import Home from "@/pages/Public/Home";
+import { Faq } from "@/pages/Public/Faq";
+import { Contact } from "@/pages/Public/Contact";
+import NotFound from "@/pages/Public/NotFound";
 
 export const router = createBrowserRouter([
   {
     Component: App,
     path: "/",
     children: [
+      {
+        path: "/",
+        index: true,
+        Component: Home,
+      },
       {
         path: "about",
         Component: About,
@@ -33,12 +41,20 @@ export const router = createBrowserRouter([
         Component: Unauthorized,
       },
       {
+        path: "contact-us",
+        Component: Contact,
+      },
+      {
         path: "faq",
         Component: Faq,
       },
       {
         path: "features",
         Component: Features,
+      },
+      {
+        path: "/*",
+        Component: NotFound,
       },
     ],
   },
@@ -52,7 +68,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: WithAuth(DashboardLayout, [IRole.ADMIN as TRole, IRole.SUPER_ADMIN as TRole]),
+    Component: WithAuth(DashboardLayout, [
+      IRole.ADMIN as TRole,
+      IRole.SUPER_ADMIN as TRole,
+    ]),
     children: [
       {
         index: true,
@@ -63,7 +82,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/super_admin",
-    Component: WithAuth(DashboardLayout, [IRole.ADMIN as TRole, IRole.SUPER_ADMIN as TRole]),
+    Component: WithAuth(DashboardLayout, [
+      IRole.ADMIN as TRole,
+      IRole.SUPER_ADMIN as TRole,
+    ]),
     children: [
       {
         index: true,

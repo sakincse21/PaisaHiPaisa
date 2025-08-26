@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -7,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,9 +31,9 @@ const loginSchema = z.object({
 });
 
 export function LoginForm() {
-  const [login]=useLoginMutation();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,20 +50,21 @@ export function LoginForm() {
     // console.log("showing res",res);
     const toastId = toast.loading("Logging in...");
     try {
-        dispatch(authApi.util.resetApiState());
+      dispatch(authApi.util.resetApiState());
       const res = await login(formData).unwrap();
-      if(res?.success){
-        toast.success("Login successful.",{id:toastId});
+      if (res?.success) {
+        toast.success("Login successful.", { id: toastId });
 
-        navigate(`/${(res?.data?.role as string).toLocaleLowerCase()}`);
-      }else{
-        toast.error(res?.data?.message,{id:toastId});
+        navigate(`/${(res?.data?.role as string)?.toLowerCase()}`);
+      } else {
+        toast.error(res?.data?.message, { id: toastId });
       }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error(error);
-      const errorMessage = error?.data?.message || "Something went wrong. Try again.";
-      toast.error(errorMessage,{id: toastId})
+      const errorMessage =
+        error?.data?.message || "Something went wrong. Try again.";
+      toast.error(errorMessage, { id: toastId });
     }
   }
   return (
@@ -97,10 +103,6 @@ export function LoginForm() {
                       />
                     </FormControl>
                     <FormMessage />
-                    <FormDescription className="w-full">
-                      <Link to={"/forgot-password"} state={{email:"hi"}}>Forgot Password?</Link> 
-                      {/* Need to work on this */}
-                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -110,12 +112,18 @@ export function LoginForm() {
             </form>
           </Form>
         </CardContent>
+        <CardFooter className="flex flex-col gap-2">
+          <Link to={"/register"} className="w-full">
+            <Button type="button" className="w-full bg-ring">
+              Register Now
+            </Button>
+          </Link>
+        </CardFooter>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <Link to={'about'}>Terms of Service</Link>{" "}
+        and <Link to={'/about'}>Privacy Policy</Link>.
       </div>
     </div>
   );
 }
-

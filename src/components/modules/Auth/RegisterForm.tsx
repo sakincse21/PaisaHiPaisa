@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,12 +18,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useRegisterMutation } from "@/redux/features/Auth/auth.api";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { IRole } from "@/constants";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const registerSchema = z.object({
   name: z
@@ -249,10 +261,18 @@ export function RegisterForm() {
             </form>
           </Form>
         </CardContent>
+        <CardFooter className="flex flex-col gap-2">
+          <h3>Have an account?</h3>
+          <Link to={"/login"} className="w-full">
+            <Button type="button" className="w-full bg-ring">
+              Login Now
+            </Button>
+          </Link>
+        </CardFooter>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <Link to={'about'}>Terms of Service</Link>{" "}
+        and <Link to={'/about'}>Privacy Policy</Link>.
       </div>
     </div>
   );
