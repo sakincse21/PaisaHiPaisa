@@ -16,27 +16,31 @@ import { authApi, useLogoutMutation} from "@/redux/features/Auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
 import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/about", label: "About" },
-];
-
 export default function Navbar() {
   const { data } = useUserInfoQuery(undefined);
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+  
+  const navigationLinks = [
+    { href: "/", label: "Home", },
+    { href: "/features", label: "Features", },
+    { href: "/faq", label: "FAQ", },
+    { href: "/about", label: "About", },
+    { href: "/contact-us", label: "Contact Us", },
+    { href: `/${(data?.data?.role as string)?.toLowerCase() || ''}`, label: `${(data?.data?.role as string)?'Dashboard':''}` },
+  ];
 
   const handleLogout = () => {
     logout(undefined);
     dispatch(authApi.util.resetApiState());
     navigate('/',{replace:true})
   };
+
+  console.log(data?.data?.email);
+  
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="px-4 md:px-6 sticky top-0 bg-background py-2">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">

@@ -11,7 +11,7 @@ import { DotPattern } from "../ui/shadcn-io/dot-pattern";
 
 export default function DashboardLayout() {
   return (
-    <div className="relative min-h-screen">
+    <div className="w-screen min-h-screen">
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset className="relative z-10">
@@ -21,7 +21,7 @@ export default function DashboardLayout() {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <div className="ml-auto">
+            <div className="ml-auto right-0">
               <ModeToggle />
             </div>
           </header>
