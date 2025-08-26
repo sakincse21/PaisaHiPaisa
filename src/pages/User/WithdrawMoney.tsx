@@ -41,7 +41,7 @@ const WithdrawMoney = () => {
   });
 
   const onSubmit = async (formData: z.infer<typeof withdrawMoneySchema>) => {
-    console.log(formData);
+    // console.log(formData);
     const toastId = toast.loading("Withdrawing money.");
     try {
       const res = await withdrawMoney(formData).unwrap();

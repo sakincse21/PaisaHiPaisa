@@ -37,7 +37,7 @@ export function LoginForm() {
     },
   });
   async function onSubmit(formData: z.infer<typeof loginSchema>) {
-    console.log(formData);
+    // console.log(formData);
     // const loginInfo:ILogin = {
     //   email: formData.email,
     //   password: formData.password

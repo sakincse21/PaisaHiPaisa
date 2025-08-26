@@ -35,7 +35,7 @@ export default function AddMoneyRequest() {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  console.log("all transactions", data);
+  // console.log("all transactions", data);
   const items: IItem[] = data?.data?.data;
   const handleRequest = async (transactionId: string, consent: boolean) => {
     const payload = {

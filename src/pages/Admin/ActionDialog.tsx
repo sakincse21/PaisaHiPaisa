@@ -75,7 +75,7 @@ const ActionDialog = ({ userId, role }: { userId: string, role?: string }) => {
   const [getSingleUser, { data, isLoading }] = useLazyGetSingleUserQuery();
   const userData = data?.data;
 
-  console.log(userData, "user single data");
+  // console.log(userData, "user single data");
 
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),

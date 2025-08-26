@@ -80,7 +80,7 @@ export function RegisterForm() {
     },
   });
   async function onSubmit(formData: z.infer<typeof registerSchema>) {
-    console.log(formData);
+    // console.log(formData);
     // const loginInfo:ILogin = {
     //   email: formData.email,
     //   password: formData.password
