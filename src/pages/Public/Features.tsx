@@ -6,7 +6,6 @@ import {
   BarChart3,
   CircleDollarSign,
 } from "lucide-react";
-import React from "react";
 
 const features = [
   // User Features
