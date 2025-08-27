@@ -1,69 +1,120 @@
-# React + TypeScript + Vite
+# PaisaHiPaisa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PaisaHiPaisa is a **digital wallet (MFS system like Bkash, Nagad and more)** built with **React, TypeScript, Vite, Redux Toolkit, and TailwindCSS**. It allows users to register, log in, manage wallets, send/receive money, request cash-in, withdraw funds, and view transaction history. The system supports multiple roles (**Admin, Agent, User**) with dashboards and analytics for each role.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 👤 User
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Register and log in securely
+* View wallet balance
+* Send and receive money
+* Request money add (cash-in)
+* Withdraw funds
+* Update profile
+* View transaction history
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🧑‍💼 Agent
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+* Cash-in to users
+* Send money to agents
+* Process add money requests
+* Dashboard with analytics and charts
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 👨‍💻 Admin
+
+* Manage users (verify, approve, block, suspend)
+* Monitor system transactions
+* View overall analytics and charts
+* Role-based access management
+
+### 🌐 Public Pages
+
+* Home, About, Features, FAQ, Contact Us
+* Testimonials and feature highlights
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Framework**: React + TypeScript + Vite
+* **State Management**: Redux Toolkit + RTK Query
+* **Styling**: TailwindCSS + shadcn/ui components
+* **Routing**: React Router v7
+* **UI Libraries**: Radix UI, Lucide Icons, Recharts (charts)
+* **Form Handling**: React Hook Form + Zod for validation
+* **Notifications**: Sonner
+
+---
+
+## 📂 Project Structure
+
+```
+sakincse21-paisahipaisa/
+│── src/
+│   ├── components/       # Reusable UI & layout components
+│   ├── pages/            # Page-level components (Admin, Agent, User, Public)
+│   ├── redux/            # Redux store, APIs, and features
+│   ├── routes/           # Route configurations
+│   ├── lib/              # Utility functions
+│   ├── constants/        # App constants
+│   └── types/            # TypeScript types
+│
+│── package.json          # Project dependencies & scripts
+│── vite.config.ts        # Vite configuration
+│── tsconfig.json         # TypeScript configuration
+│── vercel.json           # Deployment configuration (Vercel)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Installation & Setup
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/sakincse21/paisahipaisa.git
+   cd paisahipaisa
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🔐 Authentication & Roles
+
+* JWT-based authentication (frontend integration)
+* Role-based access control (User, Agent, Admin)
+* Unauthorized route handling
+
+---
+
+## 📊 Dashboards
+
+* **User Dashboard** → Wallet, Quick Actions, Recent Transactions
+* **Agent Dashboard** → Wallet, Quick Actions, Recent Transactions, Summary Chart
+* **Admin Dashboard** → Manage Users and Transactions, Analytics, System Overview
+
+---
+
+## 📜 License
+
+MIT License © 2025 [Saleheen Uddin Sakin](https://github.com/sakincse21)
