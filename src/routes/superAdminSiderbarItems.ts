@@ -3,7 +3,7 @@ import { UpdateProfile } from "@/components/modules/AllRoles/UpdateProfile";
 import AdminOverview from "@/pages/Admin/AdminOverview";
 import AllUsers from "@/pages/Admin/AllUsers";
 import type { ISidebarItem } from "@/types";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 import VerifyUsers from "@/pages/Admin/VerifyUsers";
 // import { lazy } from "react";
 

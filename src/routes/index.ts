@@ -1,6 +1,6 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 import { generateRoutes } from "@/lib/generateRoutes";
 import { WithAuth } from "@/lib/withAuth";
 import Login from "@/pages/Auth/Login";

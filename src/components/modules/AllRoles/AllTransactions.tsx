@@ -42,7 +42,7 @@ import {
   ITransactionSort,
   ITransactionStatus,
   ITransactionType,
-} from "@/constants";
+} from "@/interfaces";
 import { cn } from "@/lib/utils";
 import {
   useAllTransactionsQuery,
@@ -221,7 +221,7 @@ export default function AllTransactions() {
   const totalPage = data?.data?.meta?.totalPage || 1;
 
   return (
-    <div className="w-90 mx-auto  flex flex-col justify-center items-center md:w-5xl lg:5xl">
+    <div className="w-full mx-auto  flex flex-col justify-center items-center md:w-5xl lg:5xl">
       <Card className="w-full">
         <CardHeader>
           <CardTitle>All Transactions</CardTitle>

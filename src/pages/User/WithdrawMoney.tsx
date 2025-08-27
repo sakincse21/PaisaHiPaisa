@@ -15,7 +15,7 @@ import {
 import { useWithdrawMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
 import SearchUser from "@/components/modules/AllRoles/SearchUser";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 
 const withdrawMoneySchema = z.object({
   to: z

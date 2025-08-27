@@ -22,7 +22,7 @@ import { Link, useNavigate } from "react-router";
 import { useRegisterMutation } from "@/redux/features/Auth/auth.api";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 import {
   Select,
   SelectContent,

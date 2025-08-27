@@ -15,7 +15,7 @@ import {
 import { useAddMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
 import SearchUser from "@/components/modules/AllRoles/SearchUser";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 
 const addMoneySchema = z.object({
   to: z

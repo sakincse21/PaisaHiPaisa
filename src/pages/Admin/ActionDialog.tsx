@@ -24,7 +24,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { IRole, IStatus } from "@/constants";
+import { IRole, IStatus } from "@/interfaces";
 import {
   useLazyGetSingleUserQuery,
   useUpdateUserMutation,

@@ -1,5 +1,5 @@
 // import { adminSidebarItems } from "@/routes/adminSidebarItems";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 import { adminSiderbarItems } from "@/routes/adminSidebarItems";
 import { agentSiderbarItems } from "@/routes/agentSidebarItems";
 import { superAdminSiderbarItems } from "@/routes/superAdminSiderbarItems";

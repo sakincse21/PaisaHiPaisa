@@ -33,6 +33,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+  const tourKey = `joyride-tour-${userData?.data?._id}`;
+  const handleRestartTour =()=>{
+    localStorage.removeItem(tourKey);
+    navigate(`/${(userData?.data?.role as string)?.toLowerCase()}/overview`, { replace: true });
+  }
   const handleLogout = async () => {
     const toastId = toast.loading("Logging you out. :'(");
     try {
@@ -83,6 +88,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
+      { localStorage.getItem(tourKey) && <Button
+        variant={"ghost"}
+        size={"lg"}
+        className="text-sm m-4"
+        onClick={handleRestartTour}
+      >
+        Restart Tour
+      </Button>}
       <Button
         variant={"outline"}
         size={"lg"}

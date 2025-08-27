@@ -15,7 +15,7 @@ import {
 import { useCashInMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
 import SearchUser from "@/components/modules/AllRoles/SearchUser";
-import { IRole } from "@/constants";
+import { IRole } from "@/interfaces";
 
 const cashInSchema = z.object({
   to: z
