@@ -32,7 +32,7 @@ const AgentCharts = () => {
     title: "Transaction Type vs Volume"
   }
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="h-full w-90 mx-auto  flex flex-col justify-center items-center">
       <Card className="w-full md:w-5xl">
         <CardHeader>
           <CardTitle>Last 30Days Summary</CardTitle>

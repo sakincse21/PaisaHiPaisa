@@ -64,7 +64,7 @@ const AgentCharts = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="w-90 mx-auto h-full flex flex-col justify-center items-center">
       <Card className="w-full md:w-5xl">
         <CardHeader>
           <CardTitle>All Summary</CardTitle>
