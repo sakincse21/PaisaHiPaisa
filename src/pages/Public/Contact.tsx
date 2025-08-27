@@ -57,7 +57,7 @@ const Contact = ({
               </ul>
             </div>
           </div>
-          <div className="mx-auto flex max-w-3xl flex-col gap-6 rounded-lg border p-10">
+          <div className="mx-auto flex max-w-3xl flex-col gap-6 rounded-lg border p-10 w-96">
             <div className="flex gap-4">
               <div className="grid w-full items-center gap-1.5">
                 <Label htmlFor="firstname">First Name</Label>

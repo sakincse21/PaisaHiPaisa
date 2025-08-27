@@ -19,11 +19,11 @@ export const authApi = baseApi.injectEndpoints({
     }),
     logout: builder.mutation({
       query: () => ({
-        url: "/auth/logout", //yet to implement
+        url: "/auth/logout",
         method: "POST",
         // body: userInfo,
       }),
-      invalidatesTags: ["USER", "TRANSACTIONS"]
+      invalidatesTags: ["USER", "TRANSACTIONS", 'ADMIN_SUMMARY', 'SINGLEUSER', 'USERS', 'SUMMARY']
     }),
   }),
 });

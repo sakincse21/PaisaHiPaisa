@@ -35,11 +35,11 @@ const Overview = () => {
 
   const items: IItem[] = transactionData?.data?.data;
   return (
-    <div className="min-w-2xl w-full h-full flex flex-col justify-center items-center gap-8">
+    <div className="w-full h-full flex flex-col justify-center items-center gap-8">
       {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) ? (
         <></>
       ) : (
-        <Card className="w-full md:w-5xl">
+        <Card className="w-80 mx-auto md:w-5xl">
           <CardHeader>
             <CardTitle>Wallet</CardTitle>
           </CardHeader>
@@ -54,7 +54,7 @@ const Overview = () => {
           </CardContent>
         </Card>
       )}
-      <Card className="w-full md:w-5xl">
+      <Card className="w-80 mx-auto md:w-5xl">
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
@@ -70,7 +70,7 @@ const Overview = () => {
       {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) ? (
         <></>
       ) : (
-        <Card className="w-full md:w-5xl">
+        <Card className="w-80 mx-auto md:w-5xl">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>

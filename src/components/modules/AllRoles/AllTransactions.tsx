@@ -499,7 +499,7 @@ export default function AllTransactions() {
             </div>
 
             {items.length > 0 ? (
-              <div className="mt-8">
+              <div className="mt-8 ">
                 <Table className="[&_td]:border-border [&_th]:border-border border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b h-full">
                   <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
                     <TableRow className="hover:bg-transparent">

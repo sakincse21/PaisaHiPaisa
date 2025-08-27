@@ -93,7 +93,7 @@ export default function TestimonialCarousel() {
             loop: true,
             dragFree: true,
           }}
-          className="mt-12 w-full"
+          className="mt-12 w-80 mx-auto sm:w-full"
         >
           <CarouselContent className="-ml-4 lg:-ml-6">
             {testimonials.map((testimonial) => (

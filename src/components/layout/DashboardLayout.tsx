@@ -25,7 +25,7 @@ export default function DashboardLayout() {
               <ModeToggle />
             </div>
           </header>
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4">
+          <div className="w-full h-full flex flex-1 flex-col items-center justify-center gap-4 p-4">
             <DotPattern
               className="fixed inset-0 w-full h-full text-accent-foreground opacity-35 z-0"
               width={20}
