@@ -65,7 +65,7 @@ const Overview = () => {
   const items: IItem[] = transactionData?.data?.data;
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+    <div className="w-full md:w-5xl mx-auto h-full flex flex-col justify-center items-center gap-8">
       {(userData?.data?.role === IRole.USER ||
         userData?.data?.role === IRole.AGENT) &&
         shouldShowTour && (
@@ -91,7 +91,7 @@ const Overview = () => {
       userData?.data?.role === IRole.SUPER_ADMIN ? (
         <></>
       ) : (
-        <Card className="w-90 mx-auto md:w-5xl user-1 agent-1">
+        <Card className="w-full mx-auto md:w-5xl user-1 agent-1">
           <CardHeader>
             <CardTitle>Wallet</CardTitle>
           </CardHeader>
@@ -107,7 +107,7 @@ const Overview = () => {
         </Card>
       )}
 
-      <Card className="w-90 mx-auto md:w-5xl user-2 agent-2">
+      <Card className="w-full mx-auto md:w-5xl user-2 agent-2">
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
@@ -134,7 +134,7 @@ const Overview = () => {
       userData?.data?.role === IRole.SUPER_ADMIN ? (
         <></>
       ) : (
-        <Card className="w-90 mx-auto md:w-5xl user-6 agent-6">
+        <Card className="w-full mx-auto md:w-5xl user-6 agent-6">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>

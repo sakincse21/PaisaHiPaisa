@@ -2,6 +2,8 @@
 
 PaisaHiPaisa is a **digital wallet (MFS system like Bkash, Nagad and more)** built with **React, TypeScript, Vite, Redux Toolkit, and TailwindCSS**. It allows users to register, log in, manage wallets, send/receive money, request cash-in, withdraw funds, and view transaction history. The system supports multiple roles (**Admin, Agent, User**) with dashboards and analytics for each role.
 
+**🌐 Live Demo**: [https://paisa-hi-paisa-two.vercel.app/](https://paisa-hi-paisa-two.vercel.app/)
+
 ---
 
 ## 🚀 Features

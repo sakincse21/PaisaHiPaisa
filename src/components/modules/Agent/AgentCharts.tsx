@@ -32,13 +32,13 @@ const AgentCharts = () => {
     title: "Transaction Type vs Volume"
   }
   return (
-    <div className="h-full w-90 mx-auto  flex flex-col justify-center items-center">
+   // <div className="h-full w-full mx-auto  flex flex-col justify-center items-center">
       <Card className="w-full md:w-5xl agent-7">
         <CardHeader>
           <CardTitle>Last 30Days Summary</CardTitle>
         </CardHeader>
         <CardContent className="text-center flex flex-col md:flex-row justify-around items-center gap-4">
-          <div className="flex-1 agent-8">
+          <div className="flex-1 agent-8 w-90">
             <BarChartComponent {...transactionChartData} />
           </div>
           <div className="flex-1 agent-9">
@@ -46,7 +46,7 @@ const AgentCharts = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+//    </div>
   );
 };
 

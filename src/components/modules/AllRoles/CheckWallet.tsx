@@ -1,5 +1,6 @@
 import LoadingScreen from "@/components/layout/LoadingScreen";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CreditCard } from "@/components/shared-assets/credit-card/credit-card";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 const CheckWallet = () => {
@@ -8,10 +9,12 @@ const CheckWallet = () => {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  // console.log(data);
+
+  const userInfo = data?.data;
+  console.log(userInfo);
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <Card className="w-lg">
+      {/* <Card className="w-lg">
         <CardHeader>
           <CardTitle>{data?.data?.role} Wallet</CardTitle>
         </CardHeader>
@@ -51,7 +54,16 @@ const CheckWallet = () => {
             </h3>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
+      
+      <CreditCard
+        company={`৳${userInfo?.walletId?.balance}`}
+        cardNumber={userInfo?.walletId?.walletId}
+        cardHolder={userInfo?.name}
+        cardExpiration="07/2099"
+        type="gray-dark"
+        width={500}
+      />
     </div>
   );
 };
