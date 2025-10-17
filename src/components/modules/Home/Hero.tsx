@@ -24,7 +24,7 @@ const Hero = ({
   description = "Track your money, save smarter, and achieve your financial goals with ease digitally. PaisaHiPaisa gives you the tools to manage money stress-free.",
   button = {
     text: "Get Started Free",
-    url: "/signup",
+    url: "/register",
   },
   reviews = {
     count: 500,

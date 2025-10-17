@@ -17,7 +17,7 @@ export const transactionApi = baseApi.injectEndpoints({
         method: "POST",
         body: transaction,
       }),
-      // invalidatesTags: ["TRANSACTIONS"],
+      invalidatesTags: ["TRANSACTIONS","USER"],
     }),
     addMoneyRequest: builder.mutation({
       query: (payload) => ({

@@ -62,7 +62,7 @@ const CheckWallet = () => {
         cardHolder={userInfo?.name}
         cardExpiration="07/2099"
         type="gray-dark"
-        width={500}
+        width={480}
       />
     </div>
   );

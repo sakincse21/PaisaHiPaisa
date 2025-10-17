@@ -14,15 +14,15 @@ import {
 } from "@/components/ui/form";
 import { useAddMoneyMutation } from "@/redux/features/Transaction/transaction.api";
 import { toast } from "sonner";
-import SearchUser from "@/components/modules/AllRoles/SearchUser";
-import { IRole } from "@/interfaces";
+// import SearchUser from "@/components/modules/AllRoles/SearchUser";
+// import { IRole } from "@/interfaces";
 
 const addMoneySchema = z.object({
-  to: z
-    .string({ message: "Phone Number must be string" })
-    .regex(/^(?:01\d{9})$/, {
-      message: "Phone number must be valid for Bangladesh. Format: 018XXXXXXXX",
-    }),
+  // to: z
+  //   .string({ message: "Phone Number must be string" })
+  //   .regex(/^(?:01\d{9})$/, {
+  //     message: "Phone number must be valid for Bangladesh. Format: 018XXXXXXXX",
+  //   }),
   amount: z
     .number({ message: "Amount should be a valid number." })
     .min(50, { message: "Add money amount cannot be less than 50." }),
@@ -34,8 +34,8 @@ const AddMoney = () => {
   const form = useForm<z.infer<typeof addMoneySchema>>({
     resolver: zodResolver(addMoneySchema),
     defaultValues: {
-      to: "",
-      amount: 0,
+      // to: "",
+      amount: 50,
       type: "ADD_MONEY",
     },
   });
@@ -47,9 +47,10 @@ const AddMoney = () => {
       const res = await addMoney(formData).unwrap();
       if (res?.success) {
         toast.success(
-          "Requested agent successfully. Contact him now to approve.",
+          "Add money requested. Please complete the transaction.",
           { id: toastId }
         );
+        window.open(res?.data?.paymentUrl, '_blank', 'noopener,noreferrer');
         form.reset();
       } else {
         toast.error(res?.data?.message, { id: toastId });
@@ -72,8 +73,8 @@ const AddMoney = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex justify-center items-end w-full gap-2">
-                <FormField
+              {/* <div className="flex justify-center items-end w-full gap-2"> */}
+                {/* <FormField
                   control={form.control}
                   name="to"
                   render={({ field }) => (
@@ -87,9 +88,9 @@ const AddMoney = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
-                <SearchUser form={form} requiredRole={IRole.AGENT} />
-              </div>
+                /> */}
+                {/* <SearchUser form={form} requiredRole={IRole.AGENT} /> */}
+              {/* </div> */}
               <FormField
                 control={form.control}
                 name="amount"

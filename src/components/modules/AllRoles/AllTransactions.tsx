@@ -74,6 +74,7 @@ export interface IItem {
   amount: number;
   type: string;
   status: string;
+  fees: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -506,6 +507,7 @@ export default function AllTransactions() {
                       <TableHead>From</TableHead>
                       <TableHead>To</TableHead>
                       <TableHead>Amount</TableHead>
+                      <TableHead>{userData?.data?.role===IRole.AGENT?"Commission":"Charges"}</TableHead>
                       <TableHead>Type</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead
@@ -531,6 +533,7 @@ export default function AllTransactions() {
                         </TableCell>
                         <TableCell>{item.to}</TableCell>
                         <TableCell>{item.amount}</TableCell>
+                        <TableCell>{item.fees}</TableCell>
                         <TableCell>{item.type}</TableCell>
                         <TableCell>{item.status}</TableCell>
                         <TableCell
