@@ -21,6 +21,8 @@ import Home from "@/pages/Public/Home";
 import { Faq } from "@/pages/Public/Faq";
 import { Contact } from "@/pages/Public/Contact";
 import NotFound from "@/pages/Public/NotFound";
+import AddMoneySuccess from "@/pages/User/AddMoneySuccess";
+// import AddMoneyFailed from "@/pages/User/AddMoneyFailed";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ export const router = createBrowserRouter([
     path: "/login",
     Component: Login,
   },
+  {
+    path: "/add-money/success",
+    Component: AddMoneySuccess,
+  },
+  // {
+  //   path: "/add-money/failed",
+  //   Component: AddMoneyFailed,
+  // },
   {
     path: "/admin",
     Component: WithAuth(DashboardLayout, [
