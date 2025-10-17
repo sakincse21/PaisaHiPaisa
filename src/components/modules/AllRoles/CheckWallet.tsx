@@ -1,10 +1,11 @@
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import { CreditCard } from "@/components/shared-assets/credit-card/credit-card";
+import { Button } from "@/components/ui/button";
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 const CheckWallet = () => {
-  const { data, isLoading } = useUserInfoQuery(undefined);
+  const { data, isLoading, refetch } = useUserInfoQuery(undefined);
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -64,6 +65,9 @@ const CheckWallet = () => {
         type="gray-dark"
         width={480}
       />
+      <div className="p-5 flex flex-row justify-end">
+        <Button onClick={()=>refetch()} variant={"outline"} className="text-xl font-bold text-secondary">Refresh</Button>
+      </div>
     </div>
   );
 };
