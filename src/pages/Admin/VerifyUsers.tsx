@@ -81,6 +81,7 @@ const filterSchema = z.object({
   sortBy: z.string().optional(),
   limit: z.string().optional(),
   isVerified: z.string(),
+  status: z.string()
 });
 
 export interface IFilters {
@@ -91,6 +92,7 @@ export interface IFilters {
   page?: string;
   sortBy?: string;
   isVerified: string;
+  status: string;
 }
 
 const sortByOptions: string[] = ["name", "phoneNo", "nidNo", "email"];
@@ -104,6 +106,7 @@ export default function VerifyUsers() {
     sortBy: "createdAt",
     sort: "asc",
     isVerified: "false",
+    status: "ACTIVE"
   };
   const [filters, setFilters] = useState<IFilters | null>(defaultFilter);
   const { data, isLoading } = useGetAllUsersQuery(filters);
@@ -119,6 +122,7 @@ export default function VerifyUsers() {
       limit: "10",
       sortBy: "createdAt",
       isVerified: "false",
+      status: "ACTIVE"
     },
   });
 
@@ -131,6 +135,7 @@ export default function VerifyUsers() {
     setFilters({
       ...cleanedFilters,
       isVerified: "false",
+      status: "ACTIVE"
     } as IFilters);
     setCurrentPage(1);
     setOpenDialog(false);
@@ -141,6 +146,7 @@ export default function VerifyUsers() {
       ...filters,
       page: currentPage.toString(),
       isVerified: "false",
+      status: "ACTIVE"
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
@@ -161,6 +167,28 @@ export default function VerifyUsers() {
     try {
       const payload = {
         isVerified: true,
+        userId,
+      };
+      const res = await updateUser(payload).unwrap();
+      if (res?.success) {
+        toast.success("User updated successfully.", { id: toastId });
+      } else {
+        toast.error(res?.data?.message, { id: toastId });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(error);
+      const errorMessage =
+        error?.data?.message || "Something went wrong. Try again.";
+      toast.error(errorMessage, { id: toastId });
+    }
+  };
+
+  const handleReject = async (userId: string) => {
+    const toastId = toast.loading("Updating user.");
+    try {
+      const payload = {
+        status: "DELETE",
         userId,
       };
       const res = await updateUser(payload).unwrap();
@@ -389,12 +417,19 @@ export default function VerifyUsers() {
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.phoneNo}</TableCell>
                         <TableCell>{user.nidNo}</TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right flex flex-wrap justify-center items-center gap-3">
                           <Button
                             type="button"
                             onClick={() => handleConfirm(user._id)}
                           >
                             Confirm
+                          </Button>
+                          <Button
+                            type="button"
+                            onClick={() => handleReject(user._id)}
+                            variant={'destructive'}
+                          >
+                            Reject
                           </Button>
                         </TableCell>
                       </TableRow>
