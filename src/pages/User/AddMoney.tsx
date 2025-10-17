@@ -42,12 +42,12 @@ const AddMoney = () => {
 
   const onSubmit = async (formData: z.infer<typeof addMoneySchema>) => {
     // console.log(formData);
-    const toastId = toast.loading("Requesting money to agent.");
+    const toastId = toast.loading("Add money processing.");
     try {
       const res = await addMoney(formData).unwrap();
       if (res?.success) {
         toast.success(
-          "Add money requested. Please complete the transaction.",
+          "Please complete the transaction.",
           { id: toastId }
         );
         window.open(res?.data?.paymentUrl, '_blank', 'noopener,noreferrer');
