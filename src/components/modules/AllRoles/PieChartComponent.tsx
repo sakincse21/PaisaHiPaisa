@@ -51,7 +51,7 @@ export function PieChartComponent(pieChartData: IBarChartData) {
   const totalUsers = chartData.reduce((acc, curr) => acc + curr.visitors, 0);
 
   return (
-    <Card className="flex flex-col min-w-sm">
+    <Card className="flex flex-col min-w-sm md:max-w-5xl">
       <CardHeader className="items-center pb-0">
         <CardTitle>Users vs Agents</CardTitle>
       </CardHeader>

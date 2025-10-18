@@ -553,7 +553,11 @@ export default function AllTransactions() {
                               onClick={() => handleRefund(item._id)}
                               disabled={
                                 item.status === ITransactionStatus.PENDING ||
-                                item.status === ITransactionStatus.REFUNDED
+                                item.status === ITransactionStatus.FAILED ||
+                                item.status === ITransactionStatus.REFUNDED ||
+                                item.type === ITransactionType.CASH_IN ||
+                                item.type === ITransactionType.WITHDRAW ||
+                                item.type === ITransactionType.ADD_MONEY
                               }
                             >
                               {

@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (res?.success) {
         dispatch(authApi.util.resetApiState());
         toast.success("Log out successful.", { id: toastId });
-        navigate("/", { replace: true });
+        navigate("/login", { replace: true });
       } else {
         toast.error(res?.data?.message, { id: toastId });
       }
@@ -57,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // console.log(data);
 
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} className="z-50">
       <SidebarHeader>
         <Logo />
       </SidebarHeader>

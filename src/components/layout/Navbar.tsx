@@ -34,7 +34,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout(undefined);
     dispatch(authApi.util.resetApiState());
-    navigate('/',{replace:true})
+    navigate('/login',{replace:true})
   };
 
   console.log(data?.data?.email);
