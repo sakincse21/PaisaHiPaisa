@@ -42,7 +42,7 @@ export default function BarChartComponent(barChartData: IBarChartData) {
   const chartData = barChartData.chartData;
   const totalAmount = barChartData.totalCount || chartData.reduce((accumulator, currentValue) => accumulator + currentValue.Amount, 0);
   return (
-    <Card className="min-w-sm">
+    <Card className="min-w-sm md:max-w-5xl">
       <CardHeader>
         <CardTitle>{barChartData.title}</CardTitle>
       </CardHeader>

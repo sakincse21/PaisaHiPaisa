@@ -14,7 +14,7 @@ export default function DashboardLayout() {
     <div className="w-screen min-h-screen">
       <SidebarProvider>
         <AppSidebar />
-        <SidebarInset className="relative z-10">
+        <SidebarInset className="relative">
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator

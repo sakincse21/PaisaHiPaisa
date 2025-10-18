@@ -16,12 +16,6 @@ import { getSidebarItems } from "@/lib/getSidebarItems";
 import { useAllTransactionsQuery } from "@/redux/features/Transaction/transaction.api";
 import type { TRole } from "@/types/user";
 import { IRole } from "@/interfaces";
-import Joyride, { type CallBackProps, STATUS, EVENTS } from "react-joyride";
-import {
-  agentSteps,
-  defaultOptions,
-  userSteps,
-} from "@/constants/joyride/joyride-steps";
 
 const Overview = () => {
   const { data: userData, isLoading: isUserLoading } =
@@ -36,57 +30,11 @@ const Overview = () => {
     return <LoadingScreen />;
   }
 
-  const runTour = true;
-
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status, type, action } = data;
-
-    if (
-      (status === STATUS.FINISHED || status === STATUS.SKIPPED) &&
-      userData?.data?._id
-    ) {
-      if (
-        type === EVENTS.TOUR_END &&
-        (action === "skip" || action === "close")
-      ) {
-        const tourKey = `joyride-tour-${userData?.data?._id}`;
-        localStorage.setItem(tourKey, status);
-      }
-    }
-  };
-
-  const tourKey = `joyride-tour-${userData?.data?._id}`;
-  const tourStatus = localStorage.getItem(tourKey);
-  const shouldShowTour =
-    !tourStatus ||
-    (tourStatus !== STATUS.FINISHED && tourStatus !== STATUS.SKIPPED);
-
   const quickActions = getSidebarItems(userData?.data?.role)[0]?.items;
   const items: IItem[] = transactionData?.data?.data;
 
   return (
     <div className="w-full md:w-5xl mx-auto h-full flex flex-col justify-center items-center gap-8">
-      {(userData?.data?.role === IRole.USER ||
-        userData?.data?.role === IRole.AGENT) &&
-        shouldShowTour && (
-          <Joyride
-            steps={userData?.data?.role === IRole.USER ? userSteps : agentSteps}
-            styles={{ options: defaultOptions }}
-            showSkipButton
-            run={runTour}
-            callback={handleJoyrideCallback}
-            locale={{
-              skip: "Skip",
-              next: "Next",
-              back: "Back",
-              last: "Finish",
-            }}
-            continuous={true}
-            showProgress={true}
-            disableOverlayClose={true}
-          />
-        )}
-
       {userData?.data?.role === IRole.ADMIN ||
       userData?.data?.role === IRole.SUPER_ADMIN ? (
         <></>
@@ -107,28 +55,33 @@ const Overview = () => {
         </Card>
       )}
 
-      <Card className="w-full mx-auto md:w-5xl user-2 agent-2">
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent className="w-full flex justify-center items-center flex-wrap gap-5">
-          {quickActions?.map((item, index) => (
-            <Link
-              to={item.url}
-              key={item.url}
-              className={`font-semibold agent-${index + 3} user-${index + 3}`}
-            >
-              <Button
-                className="font-semibold"
-                type={"button"}
-                variant={"default"}
+      {userData?.data?.role === IRole.ADMIN ||
+      userData?.data?.role === IRole.SUPER_ADMIN ? (
+        <></>
+      ) : (
+        <Card className="w-full mx-auto md:w-5xl user-2 agent-2">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent className="w-full flex justify-center items-center flex-wrap gap-5">
+            {quickActions?.map((item, index) => (
+              <Link
+                to={item.url}
+                key={item.url}
+                className={`font-semibold agent-${index + 3} user-${index + 3}`}
               >
-                {item.title}
-              </Button>
-            </Link>
-          ))}
-        </CardContent>
-      </Card>
+                <Button
+                  className="font-semibold"
+                  type={"button"}
+                  variant={"default"}
+                >
+                  {item.title}
+                </Button>
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+      )}
 
       {userData?.data?.role === IRole.ADMIN ||
       userData?.data?.role === IRole.SUPER_ADMIN ? (
