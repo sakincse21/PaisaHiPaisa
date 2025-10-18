@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { authApi, useLoginMutation } from "@/redux/features/Auth/auth.api";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hook";
@@ -34,6 +34,9 @@ export function LoginForm() {
   const [login] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation(); // 👈 new
+  const from = (location.state as { from?: string })?.from || null;
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -55,7 +58,12 @@ export function LoginForm() {
       if (res?.success) {
         toast.success("Login successful.", { id: toastId });
 
-        navigate(`/${(res?.data?.role as string)?.toLowerCase()}`);
+        // navigate(`/${(res?.data?.role as string)?.toLowerCase()}`);
+        if (from) {
+          navigate(from, { replace: true });
+        } else {
+          navigate(`/${(res?.data?.role as string)?.toLowerCase()}`);
+        }
       } else {
         toast.error(res?.data?.message, { id: toastId });
       }
