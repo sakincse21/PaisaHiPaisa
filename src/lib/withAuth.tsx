@@ -12,9 +12,8 @@ export const WithAuth = (Component: ComponentType, requiredRoles?: TRole[]) => {
 
     if (!isLoading && !data?.data?.email) {
       // return <Navigate to={"/login"} />;
-      return (
-        <Navigate to="/login" state={{ from: location.pathname }} replace />
-      );
+      const from = location.pathname + location.search + location.hash;
+      return <Navigate to="/login" state={{ from }} replace />;
     }
     if (!isLoading && !requiredRoles?.includes(data?.data?.role)) {
       return <Navigate to={"/unauthorized"} />;
