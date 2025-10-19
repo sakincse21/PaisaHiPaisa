@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import SearchUser from "./SearchUser";
 import { useUserInfoQuery } from "@/redux/features/User/user.api";
 import LoadingScreen from "@/components/layout/LoadingScreen";
+import { useSearchParams } from "react-router";
 
 const sendMoneySchema = z.object({
   to: z
@@ -33,11 +34,14 @@ const sendMoneySchema = z.object({
 const SendMoney = () => {
   const [sendMoney] = useSendMoneyMutation();
   const {data:userData, isLoading:isUserLoading} = useUserInfoQuery(undefined);
+  const [params]=useSearchParams();
+
+  const receiver = params.get('receiver') || "";
   
   const form = useForm<z.infer<typeof sendMoneySchema>>({
     resolver: zodResolver(sendMoneySchema),
     defaultValues: {
-      to: "",
+      to: receiver,
       amount: 5,
       type: "SEND_MONEY",
     },
