@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 import { ModeToggle } from "../ui/mode-toggle";
-import { DotPattern } from "../ui/shadcn-io/dot-pattern";
+// import { DotPattern } from "../ui/shadcn-io/dot-pattern";
 
 export default function DashboardLayout() {
   return (
@@ -26,12 +26,12 @@ export default function DashboardLayout() {
             </div>
           </header>
           <div className="w-full h-full flex flex-1 flex-col items-center justify-center gap-4 p-4">
-            <DotPattern
+            {/* <DotPattern
               className="fixed inset-0 w-full h-full text-accent-foreground opacity-35 z-0"
               width={20}
               height={20}
               glow={true}
-            />
+            /> */}
             <Outlet />
           </div>
         </SidebarInset>

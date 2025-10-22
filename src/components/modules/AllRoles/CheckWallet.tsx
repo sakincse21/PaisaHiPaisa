@@ -45,7 +45,7 @@ const CheckWallet = () => {
   const userInfo = data?.data;
   console.log(userInfo);
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="w-full h-full flex flex-col justify-center items-center p-4">
       {/* <Card className="w-lg">
         <CardHeader>
           <CardTitle>{data?.data?.role} Wallet</CardTitle>
@@ -88,14 +88,15 @@ const CheckWallet = () => {
         </CardContent>
       </Card> */}
 
-      <CreditCard
-        company={`৳${userInfo?.walletId?.balance}`}
-        cardNumber={userInfo?.walletId?.walletId}
-        cardHolder={userInfo?.name}
-        cardExpiration="07/2099"
-        type="gray-dark"
-        width={480}
-      />
+        <CreditCard
+          company={`৳${userInfo?.walletId?.balance}`}
+          cardNumber={userInfo?.walletId?.walletId}
+          cardHolder={userInfo?.name}
+          cardExpiration="07/2099"
+          type="gray-dark"
+          width={480}
+        />
+
       <div className="p-5 flex flex-row justify-around items-center w-full gap-3 max-w-2xl">
         <Button
           onClick={() => refetch()}
