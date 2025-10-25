@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 const registerSchema = z.object({
   name: z
@@ -78,6 +79,7 @@ const registerSchema = z.object({
 
 export function RegisterForm() {
   const [register] = useRegisterMutation();
+  const { data: userData } = useUserInfoQuery(undefined);
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -119,6 +121,10 @@ export function RegisterForm() {
         error?.data?.message || "Something went wrong. Try again.";
       toast.error(errorMessage, { id: toastId });
     }
+  }
+
+  if(userData?.data?.email){
+    navigate(`/${(userData?.data?.role as string)?.toLowerCase()}`);
   }
   return (
     <div className={"flex flex-col gap-6"}>
@@ -271,7 +277,7 @@ export function RegisterForm() {
         </CardFooter>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <Link to={'about'}>Terms of Service</Link>{" "}
+        By clicking continue, you agree to our <Link to={'/about'}>Terms of Service</Link>{" "}
         and <Link to={'/about'}>Privacy Policy</Link>.
       </div>
     </div>
