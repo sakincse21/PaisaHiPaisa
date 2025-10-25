@@ -4,10 +4,10 @@ import { DotPattern } from "./components/ui/shadcn-io/dot-pattern";
 
 function App() {
   return (
-    <div className="min-h-screen w-screen container mx-auto" >
+    <div className="min-h-screen w-screen container mx-auto">
       <CommonLayout>
         <DotPattern
-          className="fixed inset-0 w-full h-full text-accent-foreground opacity-35 z-0"
+          className="fixed inset-0 w-full h-full text-accent-foreground opacity-55 dark:opacity-15 z-0"
           width={20}
           height={20}
           // glow={true}

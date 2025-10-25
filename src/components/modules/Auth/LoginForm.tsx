@@ -22,6 +22,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { authApi, useLoginMutation } from "@/redux/features/Auth/auth.api";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hook";
+import { useUserInfoQuery } from "@/redux/features/User/user.api";
 
 const loginSchema = z.object({
   email: z.email({ error: "Enter a valid Email." }).toLowerCase(),
@@ -32,6 +33,7 @@ const loginSchema = z.object({
 
 export function LoginForm() {
   const [login] = useLoginMutation();
+    const { data: userData } = useUserInfoQuery(undefined);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation(); // 👈 new
@@ -74,6 +76,9 @@ export function LoginForm() {
         error?.data?.message || "Something went wrong. Try again.";
       toast.error(errorMessage, { id: toastId });
     }
+  }
+  if(userData?.data?.email){
+    navigate(`/${(userData?.data?.role as string)?.toLowerCase()}`);
   }
   return (
     <div className={"flex flex-col gap-6"}>
@@ -130,7 +135,7 @@ export function LoginForm() {
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to our{" "}
-        <Link to={"about"}>Terms of Service</Link> and{" "}
+        <Link to={"/about"}>Terms of Service</Link> and{" "}
         <Link to={"/about"}>Privacy Policy</Link>.
       </div>
     </div>
