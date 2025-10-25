@@ -508,20 +508,26 @@ export default function AllTransactions() {
                       <TableHead>From</TableHead>
                       <TableHead>To</TableHead>
                       <TableHead>Amount</TableHead>
-                      <TableHead>{userData?.data?.role===IRole.AGENT?"Commission":"Charges"}</TableHead>
+                      <TableHead>
+                        {userData?.data?.role === IRole.AGENT
+                          ? "Commission"
+                          : "Charges"}
+                      </TableHead>
                       <TableHead>Type</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead
                         className={cn(
                           "",
-                          (userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN)
+                          userData?.data?.role === IRole.ADMIN ||
+                            userData?.data?.role === IRole.SUPER_ADMIN
                             ? ""
                             : "text-right"
                         )}
                       >
                         Date
                       </TableHead>
-                      {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) && (
+                      {(userData?.data?.role === IRole.ADMIN ||
+                        userData?.data?.role === IRole.SUPER_ADMIN) && (
                         <TableHead className="text-right">Action</TableHead>
                       )}
                     </TableRow>
@@ -536,18 +542,32 @@ export default function AllTransactions() {
                         <TableCell>{item.amount}</TableCell>
                         <TableCell>{item.fees}</TableCell>
                         <TableCell>{item.type}</TableCell>
-                        <TableCell><Badge variant={item.status === ITransactionStatus.COMPLETED ? "secondary" : item.status === ITransactionStatus.REFUNDED ? "default": "destructive"}>{item.status}</Badge></TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              item.status === ITransactionStatus.COMPLETED
+                                ? "secondary"
+                                : item.status === ITransactionStatus.REFUNDED
+                                ? "default"
+                                : "destructive"
+                            }
+                          >
+                            <span className="font-semibold">{item.status}</span>
+                          </Badge>
+                        </TableCell>
                         <TableCell
                           className={cn(
                             "",
-                            (userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN)
+                            userData?.data?.role === IRole.ADMIN ||
+                              userData?.data?.role === IRole.SUPER_ADMIN
                               ? ""
                               : "text-right"
                           )}
                         >
                           {new Date(item.updatedAt).toLocaleString()}
                         </TableCell>
-                        {(userData?.data?.role === IRole.ADMIN || userData?.data?.role === IRole.SUPER_ADMIN) && (
+                        {(userData?.data?.role === IRole.ADMIN ||
+                          userData?.data?.role === IRole.SUPER_ADMIN) && (
                           <TableCell className="text-right">
                             <Button
                               variant={"destructive"}
@@ -561,9 +581,9 @@ export default function AllTransactions() {
                                 item.type === ITransactionType.ADD_MONEY
                               }
                             >
-                              {
-                                item.status === ITransactionStatus.REFUNDED ? item.status:" Refund "
-                              }
+                              {item.status === ITransactionStatus.REFUNDED
+                                ? item.status
+                                : " Refund "}
                             </Button>
                           </TableCell>
                         )}
