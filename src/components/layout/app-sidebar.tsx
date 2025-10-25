@@ -33,7 +33,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-  
+
   const handleLogout = async () => {
     const toastId = toast.loading("Logging you out. :'(");
     try {
@@ -59,7 +59,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props} className="z-50">
       <SidebarHeader>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <h2 className="m-2 mt-4 text-lg font-semibold">

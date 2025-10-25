@@ -66,6 +66,7 @@ import {
 import { useUserInfoQuery } from "@/redux/features/User/user.api";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export interface IItem {
   _id: string;
@@ -535,7 +536,7 @@ export default function AllTransactions() {
                         <TableCell>{item.amount}</TableCell>
                         <TableCell>{item.fees}</TableCell>
                         <TableCell>{item.type}</TableCell>
-                        <TableCell>{item.status}</TableCell>
+                        <TableCell><Badge variant={item.status === ITransactionStatus.COMPLETED ? "secondary" : item.status === ITransactionStatus.REFUNDED ? "default": "destructive"}>{item.status}</Badge></TableCell>
                         <TableCell
                           className={cn(
                             "",
